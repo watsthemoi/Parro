@@ -42,16 +42,14 @@ def main():
     btn_frame.grid(row=1, column=1, sticky="e", padx=20, pady=(80, 10))  # Sticky e means stick to the east
 
     # Add Buttons to the right side of the frame
-    btn_new_composition = tk.Button(btn_frame, text='New Composition', width=25)
+    btn_new_composition = tk.Button(btn_frame, text='New Composition', width=15, command=None)
     btn_new_composition.pack(side=tk.TOP) 
 
-    btn_new_recording = tk.Button(btn_frame, text='New Recording', width=25)
+    btn_new_recording = tk.Button(btn_frame, text='New Recording', width=15, command=None)
     btn_new_recording.pack(side=tk.TOP)
 
-    btn_resume_composition = tk.Button(btn_frame, text='Resume Composition', width=25)
+    btn_resume_composition = tk.Button(btn_frame, text='Resume Composition', width=15, command=None)
     btn_resume_composition.pack(side=tk.TOP) 
-
-
 
     root.mainloop()
 
