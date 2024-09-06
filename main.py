@@ -34,10 +34,22 @@ def main():
 
     # Add title to box from right side
     lbl_title = tk.Label(frm_window, text="Parro", font=("Arial", 50), fg="white", bg="#606060")
-    lbl_title.grid(row=4, column=0, sticky="w", padx=20, pady=(80,10)) # Sticky w means stick to the west
+    lbl_title.grid(row=0, column=0, sticky="w", padx=20, pady=(80,10)) # Sticky w means stick to the west
                                        # Adjust pady to lower or raise title: n from top, and m from bottom
 
+    # Create a sub-frame for the buttons to manage them together
+    btn_frame = tk.Frame(frm_window, bg="#606060")
+    btn_frame.grid(row=1, column=1, sticky="e", padx=20, pady=(80, 10))  # Sticky e means stick to the east
 
+    # Add Buttons to the right side of the frame
+    btn_new_composition = tk.Button(btn_frame, text='New Composition', width=15, command=None)
+    btn_new_composition.pack(side=tk.TOP) 
+
+    btn_new_recording = tk.Button(btn_frame, text='New Recording', width=15, command=None)
+    btn_new_recording.pack(side=tk.TOP)
+
+    btn_resume_composition = tk.Button(btn_frame, text='Resume Composition', width=15, command=None)
+    btn_resume_composition.pack(side=tk.TOP) 
 
     root.mainloop()
 
