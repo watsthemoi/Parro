@@ -1,57 +1,92 @@
-import tkinter as tk
-# from [folder].[page] import [def to display page]
-# from [folder].[page] import [def to display page]
+import json
+import customtkinter as ctk
+from PIL import Image, ImageTk
 
-# Variable Naming Convention
-# Frame = frm_name
-# Label = lbl_name
-# Button = btn_name
-# Entry = ent_name
-# Text = txt_name
+# Function to load JSON data from a file
+def load_json_from_file(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
 
-def main():
-    root = tk.Tk()
-    root.title("Parro")
+class Main(ctk.CTk):
+    def __init__(self, json_data):
+        super().__init__()
+        
+        # Extract the main window parameters
+        main_data = json_data.get("MAIN-1", {})
+        main_params = main_data.get("parameters", {})
+        self.title(main_params.get("title", "Parro"))
+        self.geometry(f"{main_params.get('width', 800)}x{main_params.get('height', 500)}")
+        
+        # Set the theme
+        ctk.set_appearance_mode("dark")  # You can choose 'light' or 'dark'
+        ctk.set_default_color_theme(main_data.get("theme", "dark-blue"))
 
-    # Configure root to resize frame
-    root.rowconfigure(0, weight=1)
-    root.columnconfigure(0, weight=1)
+        # Create the options frame
+        options_frame_data = main_data.get("OPTIONSFRAME", {})
+        options_frame = ctk.CTkFrame(self)
+        options_frame.pack(**options_frame_data.get("pack_options", {}))
 
-    # Create window frame
-    frm_window = tk.Frame(root, bg="#606060", width=200, height=150) # Minimized page will start off as this size
-    frm_window.pack(fill="both", expand=True) # Frame expands with page
+        # Add components to the frame
+        self.create_textbox(options_frame, options_frame_data.get("TB_TITLE"))
+        self.create_button(options_frame, options_frame_data.get("BTN_HOME"))
+        self.create_button(options_frame, options_frame_data.get("BTN_NEWCOMP"))
+        self.create_button(options_frame, options_frame_data.get("BTN_NEWRECORDING"))
+        self.create_textbox(options_frame, options_frame_data.get("TB_RECORDINGS"))
+        self.create_button(options_frame, options_frame_data.get("BTN_RESUMERECORDING"))
+        self.create_textbox(options_frame, options_frame_data.get("TB_COMPOSITIONS"))
+        self.create_button(options_frame, options_frame_data.get("BTN_RESUMECOMPOSITION"))
 
-    ## When you want to put the logo above the title
-    # image = Image.open("[image_name].[file_type]")
-    # image = image.resize(100, 100), Image.ANTIALIAS)
-    # image = ImageTk.PhotoImage(image)
-    ##
+    def create_textbox(self, parent, textbox_data):
+        if not textbox_data:
+            return
 
-    ## Add image to box
-    # i_label = tk.Label(frame, image=image, bg="#606060")
-    # i_label.grid(row=0, column=0, sticky="w", padx=20, pady=(80,0)) # Adjusted to be placed above title
-    ## 
+        textbox = ctk.CTkLabel(
+            parent,
+            text=textbox_data.get("parameters", {}).get("text", ""),
+            text_color=textbox_data.get("parameters", {}).get("text_color", ["#ffffff", "#ffffff"])[0],
+            height=textbox_data.get("parameters", {}).get("height", 25),
+            font=(textbox_data.get("parameters", {}).get("font_family", "Fixedsys"),
+                  textbox_data.get("parameters", {}).get("font_size", 15))
+        )
+        # Ensure left alignment using anchor="w"
+        textbox.pack(
+            **textbox_data.get("pack_options", {})
+        )
 
-    # Add title to box from right side
-    lbl_title = tk.Label(frm_window, text="Parro", font=("Arial", 50), fg="white", bg="#606060")
-    lbl_title.grid(row=0, column=0, sticky="w", padx=20, pady=(80,10)) # Sticky w means stick to the west
-                                       # Adjust pady to lower or raise title: n from top, and m from bottom
+    def create_button(self, parent, button_data):
+        if not button_data:
+            return
 
-    # Create a sub-frame for the buttons to manage them together
-    btn_frame = tk.Frame(frm_window, bg="#606060")
-    btn_frame.grid(row=1, column=1, sticky="e", padx=20, pady=(80, 10))  # Sticky e means stick to the east
+        button_params = button_data.get("parameters", {})
+        image_data = button_params.get("image", {})
+        
+        # Load the image
+        if image_data:
+            img = Image.open(image_data.get("image"))
+            img = img.resize(image_data.get("size", [18, 18]))
+            button_image = ImageTk.PhotoImage(img)
+        else:
+            button_image = None
 
-    # Add Buttons to the right side of the frame
-    btn_new_composition = tk.Button(btn_frame, text='New Composition', width=15, command=None)
-    btn_new_composition.pack(side=tk.TOP) 
-
-    btn_new_recording = tk.Button(btn_frame, text='New Recording', width=15, command=None)
-    btn_new_recording.pack(side=tk.TOP)
-
-    btn_resume_composition = tk.Button(btn_frame, text='Resume Composition', width=15, command=None)
-    btn_resume_composition.pack(side=tk.TOP) 
-
-    root.mainloop()
+        button = ctk.CTkButton(
+            parent,
+            text=button_params.get("text", ""),
+            fg_color=button_params.get("fg_color", ["#212121", "#212121"])[0],
+            text_color=button_params.get("text_color", ["#ffffff", "#ffffff"])[0],
+            hover_color=button_params.get("hover_color", ["#ff8080", "#ff5e5e"])[0],
+            image=button_image,
+            font=(button_params.get("font_family", "Fixedsys"), button_params.get("font_size", 20)),
+            width=button_params.get("width", 180)
+        )
+        # Ensure left alignment using anchor="w"
+        button.pack(
+            **button_data.get("pack_options", {})
+        )
 
 if __name__ == "__main__":
-    main()
+    # Load the JSON configuration from an external file
+    json_file_path = "assets/Parro.json" # Path to your JSON file
+    json_data = load_json_from_file(json_file_path)
+    
+    app = Main(json_data)
+    app.mainloop()
