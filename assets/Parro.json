@@ -1,5 +1,5 @@
 {
-    "MAIN-1": {
+"MAIN-1": {
         "TYPE": "MAIN",
         "parameters": {
             "title": "Parro",
@@ -47,7 +47,7 @@
                 },
                 "pack_options": {
                     "padx": [
-                        0,
+                        10,
                         0
                     ],
                     "anchor": "center",
@@ -100,7 +100,7 @@
                         10,
                         0
                     ],
-                    "anchor": "w",
+                    "anchor": "center",
                     "expand": 0,
                     "fill": "none",
                     "ipadx": 0,
@@ -150,7 +150,7 @@
                         10,
                         0
                     ],
-                    "anchor": "w",
+                    "anchor": "center",
                     "expand": 0,
                     "fill": "none",
                     "ipadx": 0,
@@ -200,7 +200,7 @@
                         10,
                         0
                     ],
-                    "anchor": "w",
+                    "anchor": "center",
                     "expand": 0,
                     "fill": "none",
                     "ipadx": 0,
@@ -289,7 +289,7 @@
                         10,
                         0
                     ],
-                    "anchor": "w",
+                    "anchor": "center",
                     "expand": 0,
                     "fill": "none",
                     "ipadx": 0,
@@ -378,7 +378,7 @@
                         10,
                         0
                     ],
-                    "anchor": "w",
+                    "anchor": "center",
                     "expand": 0,
                     "fill": "none",
                     "ipadx": 0,

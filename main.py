@@ -45,6 +45,7 @@ class Main(ctk.CTk):
             text=textbox_data.get("parameters", {}).get("text", ""),
             text_color=textbox_data.get("parameters", {}).get("text_color", ["#ffffff", "#ffffff"])[0],
             height=textbox_data.get("parameters", {}).get("height", 25),
+            anchor=textbox_data.get("parameters", {}).get("anchor", "w"),
             font=(textbox_data.get("parameters", {}).get("font_family", "Fixedsys"),
                   textbox_data.get("parameters", {}).get("font_size", 15))
         )
@@ -75,8 +76,9 @@ class Main(ctk.CTk):
             text_color=button_params.get("text_color", ["#ffffff", "#ffffff"])[0],
             hover_color=button_params.get("hover_color", ["#ff8080", "#ff5e5e"])[0],
             image=button_image,
-            font=(button_params.get("font_family", "Fixedsys"), button_params.get("font_size", 20)),
-            width=button_params.get("width", 180)
+            font=(button_params.get("font_family", "Fixedsys"), button_params.get("font_size", 15)),
+            width=button_params.get("width", 180),
+            anchor=button_params.get("anchor", "w"),
         )
         # Ensure left alignment using anchor="w"
         button.pack(
