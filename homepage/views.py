@@ -1,6 +1,6 @@
 from customtkinter import *
 from PIL import Image
-
+from newrecord.controller import openNewRecordView
 class HomePageView(CTk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -15,7 +15,7 @@ class HomePageView(CTk):
         self.BTN_HOME.pack(padx=(10, 0), pady=(30, 0))
         self.BTN_NEWCOMP = CTkButton(master=self.OPTIONSFRAME, text="New Composition", fg_color=("#212121", "#212121"), text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_music_note_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=20, family="Fixedsys"))
         self.BTN_NEWCOMP.pack(padx=(10, 0), pady=(10, 0))
-        self.BTN_NEWRECORDING = CTkButton(master=self.OPTIONSFRAME, text="New Recording", fg_color=("#212121", "#212121"), text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_mic_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=20, family="Fixedsys"))
+        self.BTN_NEWRECORDING = CTkButton(master=self.OPTIONSFRAME, text="New Recording", fg_color=("#212121", "#212121"), text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_mic_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=20, family="Fixedsys"), command=lambda: openNewRecordView(self))
         self.BTN_NEWRECORDING.pack(padx=(10, 0), pady=(10, 0))
         self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, text="-----------------------------------------------------------------------------------", anchor="s", justify="center", height=0, text_color=("gray14", "#808080"), font=CTkFont(size=9))
         self.LB_HZLINE.pack(pady=(22,0))
