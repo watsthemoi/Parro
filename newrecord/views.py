@@ -16,11 +16,26 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.LB_TITLE = CTkLabel(master=self.OPTIONSFRAME, text="OPTIONS", height=25, text_color=("#ffffff", "#ffffff"), font=CTkFont(size=35, family="Courier New", weight="bold", overstrike=False))
         self.LB_TITLE.pack(padx=(10, 0), pady=(20, 0))
 
+        self.LB_COMPOSITIONS = CTkLabel(master=self.OPTIONSFRAME, text="File", height=25, text_color=("#ffffff", "#ffffff"), font=CTkFont(size=15, family="Courier New", weight="bold"))
+        self.LB_COMPOSITIONS.pack(padx=(20, 0), pady=(20, 0), anchor="w")
+
         self.BTN_SAVE = CTkButton(master=self.OPTIONSFRAME, text="Save", text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
         self.BTN_SAVE.pack(padx=(10, 0), pady=(30, 0))
 
         self.BTN_DELETE = CTkButton(master=self.OPTIONSFRAME, text="Delete", text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_delete_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
         self.BTN_DELETE.pack(padx=(10, 0), pady=(10, 0))
+
+        self.BTN_NEW = CTkButton(master=self.OPTIONSFRAME, text="New", text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_delete_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+        self.BTN_NEW.pack(padx=(10, 0), pady=(10, 0))
+
+        self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, text="-----------------------------------------------------------------------------------", anchor="s", justify="center", height=0, text_color=("gray14", "#808080"), font=CTkFont(size=9))
+        self.LB_HZLINE.pack(pady=(22, 0))
+
+        self.LB_SOURCE = CTkLabel(master=self.OPTIONSFRAME, text="Source", height=25, text_color=("#ffffff", "#ffffff"), font=CTkFont(size=15, family="Courier New", weight="bold"))
+        self.LB_SOURCE.pack(padx=(20, 0), pady=(20, 0), anchor="w")
+
+        self.BTN_CAS = CTkButton(master=self.OPTIONSFRAME, text="Change Audio Source", text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_open_new_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+        self.BTN_CAS.pack(padx=(10, 0), pady=(10, 0))
 
         self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, text="-----------------------------------------------------------------------------------", anchor="s", justify="center", height=0, text_color=("gray14", "#808080"), font=CTkFont(size=9))
         self.LB_HZLINE.pack(pady=(22, 0))
@@ -36,8 +51,8 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.MAINFRAME.pack_propagate(False)
         self.MAINFRAME.pack(fill="both")
 
-        self.LB_RECENTS = CTkLabel(master=self.MAINFRAME, text="Recording", height=54, text_color=("#ffffff", "#ffffff"), width=271, fg_color="transparent", bg_color="transparent", font=CTkFont(family="Courier New", size=25))
-        self.LB_RECENTS.pack(pady=(20, 0))
+        self.LB_REC = CTkLabel(master=self.MAINFRAME, text="Recording", height=54, text_color=("#ffffff", "#ffffff"), width=271, fg_color="transparent", bg_color="transparent", font=CTkFont(family="Courier New", size=25))
+        self.LB_REC.pack(pady=(20, 0))
 
         self.FILESFRAME = CTkFrame(master=self.MAINFRAME, fg_color="transparent", bg_color="transparent", width=500, height=155)
         self.FILESFRAME.pack_propagate(False)
@@ -56,3 +71,10 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
 
         self.BTN_VIEW = CTkButton(master=self.FILEFRAME2, text="Stop", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14))
         self.BTN_VIEW.pack(side="top")
+
+        self.AUD_FRM = CTkFrame(master=self.MAINFRAME, width=590, height=514, bg_color=("gray92", "#3e3e3e"), fg_color=("gray90", "#3e3e3e"))
+        self.AUD_FRM.pack_propagate(False)
+        self.AUD_FRM.pack(fill="both")
+
+        self.TEST = CTkButton(master=self.FILEFRAME1, text="TEST", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14))
+        self.TEST.pack(side="top")
