@@ -61,23 +61,35 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.LB_REC = CTkLabel(master=self.MAINFRAME, text="Recording", height=54, text_color=("#ffffff", "#ffffff"), width=271, fg_color="transparent", bg_color="transparent", font=CTkFont(family="Courier New", size=25))
         self.LB_REC.pack(pady=(20, 0))
 
-        self.FILESFRAME = CTkFrame(master=self.MAINFRAME, fg_color="transparent", bg_color="transparent", width=500, height=155)
+        self.FILESFRAME = CTkFrame(master=self.MAINFRAME, fg_color="transparent", bg_color="transparent", width=500, height=100)
         self.FILESFRAME.pack_propagate(False)
         self.FILESFRAME.pack(pady=(0, 0), side="top")
 
-        self.FILEFRAME1 = CTkFrame(master=self.FILESFRAME, width=245, height=150, fg_color="transparent", bg_color="transparent")
+        self.FILEFRAME1 = CTkFrame(master=self.FILESFRAME, width=100, height=100, fg_color="transparent", bg_color="transparent")
         self.FILEFRAME1.pack_propagate(False)
         self.FILEFRAME1.pack(padx=(5, 0), side="left")
 
         self.BTN_VIEW = CTkButton(master=self.FILEFRAME1, text="Start", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14))
-        self.BTN_VIEW.pack(padx=(0, 0), side="top", anchor="e")
+        self.BTN_VIEW.pack(pady=(20, 0), side="top", anchor="e")
 
-        self.FILEFRAME2 = CTkFrame(master=self.FILESFRAME, width=200, height=150, fg_color="transparent", bg_color="transparent")
+        self.FILEFRAME2 = CTkFrame(master=self.FILESFRAME, width=100, height=100, fg_color="transparent", bg_color="transparent")
         self.FILEFRAME2.pack_propagate(False)
         self.FILEFRAME2.pack(padx=(5, 0), side="left")
 
         self.BTN_VIEW = CTkButton(master=self.FILEFRAME2, text="Stop", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14))
-        self.BTN_VIEW.pack(side="top", anchor="w")
+        self.BTN_VIEW.pack(pady=(20, 0), side="top", anchor="w")
+
+        self.FILEFRAME3 = CTkFrame(master=self.FILESFRAME, width=400, height=70, fg_color="transparent", bg_color="transparent")
+        self.FILEFRAME3.pack_propagate(False)
+        self.FILEFRAME3.pack(padx=(50, 0))
+
+        self.LB_LEFT = CTkLabel(master=self.FILEFRAME3, text="-30dB")
+        self.LB_LEFT.pack(padx=(0,0), side="left", anchor="w")
+        self.LB_RIGHT = CTkLabel(master=self.FILEFRAME3, text="+30dB")
+        self.LB_RIGHT.pack(padx=(0,0), side="right", anchor="e")
+        self.SLDR_GAINCONTROL = CTkSlider(master=self.FILEFRAME3, width=250, from_=-30, to=30, number_of_steps=20, button_color="#ffffff", button_hover_color="#ffffff")
+        self.SLDR_GAINCONTROL.set(0)
+        self.SLDR_GAINCONTROL.pack(padx=(0, 0), pady=(0,0), side="left")
 
         self.AUD_FRM = CTkFrame(master=self.MAINFRAME, width=590, height=514, bg_color=("gray92", "#3e3e3e"), fg_color=("gray90", "#3e3e3e"))
         self.AUD_FRM.pack_propagate(False)
