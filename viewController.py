@@ -1,14 +1,18 @@
+from tkinter import PhotoImage
 import customtkinter as ctk
 from homepage.views import HomePageView
 from newrecord.views import NewRecordView
+import platform
 
 class ViewManager(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("800x500")
+        self.geometry("1000x600")
         self.title("Parro")
-        self.iconbitmap("icon.ico")
+        photo = PhotoImage(file = "assets/Assets/music-note.png")
+        self.iconphoto(True, photo)
+
 
         # Initially set the home page
         self.show_homepage()
