@@ -1,8 +1,9 @@
-from homepage.controller import run_homepage
+from viewController import ViewManager
 
 def main():
     # Launch the homepage view
-    run_homepage()
+    app = ViewManager()
+    app.mainloop()
 
 if __name__ == "__main__":
     main()
