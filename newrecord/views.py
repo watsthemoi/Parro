@@ -2,8 +2,11 @@ from tkinter import PhotoImage
 from customtkinter import *
 from PIL import Image
 import platform
+from newrecord.controller import Recorder
 
 class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
+    rec = Recorder(channels=2)
+    running = None
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
@@ -69,14 +72,14 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.FILEFRAME1.pack_propagate(False)
         self.FILEFRAME1.pack(padx=(5, 0), side="left")
 
-        self.BTN_VIEW = CTkButton(master=self.FILEFRAME1, text="Start", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14))
+        self.BTN_VIEW = CTkButton(master=self.FILEFRAME1, text="Start", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14), command=self.start)
         self.BTN_VIEW.pack(pady=(20, 0), side="top", anchor="e")
 
         self.FILEFRAME2 = CTkFrame(master=self.FILESFRAME, width=100, height=100, fg_color="transparent", bg_color="transparent")
         self.FILEFRAME2.pack_propagate(False)
         self.FILEFRAME2.pack(padx=(5, 0), side="left")
 
-        self.BTN_VIEW = CTkButton(master=self.FILEFRAME2, text="Stop", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14))
+        self.BTN_VIEW = CTkButton(master=self.FILEFRAME2, text="Stop", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14), command=self.stop)
         self.BTN_VIEW.pack(pady=(20, 0), side="top", anchor="w")
 
         self.FILEFRAME3 = CTkFrame(master=self.FILESFRAME, width=400, height=70, fg_color="transparent", bg_color="transparent")
@@ -101,3 +104,16 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
     def go_home(self, event=None):
         # Call the controller's method to switch to the home page
         self.master.show_homepage()
+
+    def start(self):
+        global running
+        if self.running is None:
+            self.running = NewRecordView.rec.open('recording.wav', 'wb')
+            self.running.start_recording()
+    
+    def stop(self):
+        global running
+        if self.running is not None:
+            self.running.stop_recording()
+            self.running.close()
+            self.running = None
