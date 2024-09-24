@@ -16,7 +16,7 @@ class HomePageView(CTkFrame):
         self.LB_CREATE = CTkLabel(master=self.OPTIONSFRAME, text="Create", height=25, fg_color=("#212121", "#212121"), bg_color=("#212121", "gray13"), text_color=("#ffffff", "#ffffff"), font=CTkFont(family="Courier New", size=16, weight="bold"))
         self.LB_CREATE.pack(padx=(15, 0), pady=(10, 0), anchor="w")
 
-        self.BTN_NEWCOMP = CTkButton(master=self.OPTIONSFRAME, text="New Composition", fg_color=("#212121", "#212121"), text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_music_note_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+        self.BTN_NEWCOMP = CTkButton(master=self.OPTIONSFRAME, text="New Composition", fg_color=("#212121", "#212121"), text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_music_note_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"), command= self.show_sheet)
         self.BTN_NEWCOMP.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         self.BTN_NEWRECORDING = CTkButton(master=self.OPTIONSFRAME, text="New Recording", fg_color=("#212121", "#212121"), text_color=("#ffffff", "#ffffff"), anchor="w", width=180, image=CTkImage(Image.open(r"assets/Assets/baseline_mic_(255, 255, 255)_18dp_1x.png"), size=(18, 18)), bg_color=("#212121", "gray13"), hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"), command= self.show_record)
@@ -92,3 +92,7 @@ class HomePageView(CTkFrame):
     def show_record(self):
         # Change to recording view
         self.master.show_newrecord()
+
+    def show_sheet(self):
+        # Change to composition view
+        self.master.show_newsheet()    

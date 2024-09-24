@@ -2,6 +2,7 @@ from tkinter import PhotoImage
 import customtkinter as ctk
 from homepage.views import HomePageView
 from newrecord.views import NewRecordView
+from newsheet.views import NewSheetView
 import platform
 
 class ViewManager(ctk.CTk):
@@ -34,6 +35,13 @@ class ViewManager(ctk.CTk):
         new_record = NewRecordView(self)
         new_record.configure(fg_color=['gray92', 'gray14'])
         new_record.pack(fill="both", expand=True)
+
+    def show_newsheet(self):
+        self.clear_frame()
+
+        new_sheet = NewSheetView(self)
+        new_sheet.configure(fg_color=['gray92','gray14'])
+        new_sheet.pack(fill="both", expand=True)    
 
     def clear_frame(self):
         # Remove all widgets in the current frame
