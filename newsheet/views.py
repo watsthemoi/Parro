@@ -59,10 +59,19 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                   text="-----------------------------------------------------------------------------------", anchor="s", justify="center", height=0, text_color=("gray14", "#808080"), font=CTkFont(size=9))
         self.LB_HZLINE.pack(pady=(10, 0))
 
-        # Main frame
-        self.MAINFRAME = CTkFrame(master=self, width=590, height=514, bg_color=("gray92", "#3e3e3e"), fg_color=("gray90", "#3e3e3e"))
+        # Play Tools Frame; Accessed after Adding Audio
+        # Edit Tools Frame; Accessed after Clicking Edit Composition
+
+        # Composition Frame
+        self.MAINFRAME = CTkFrame(master=self, width=590, height=514, bg_color=("gray92", "#3e3e3e"), 
+                                  fg_color=("gray90", "#3e3e3e"))
         self.MAINFRAME.pack_propagate(False)
         self.MAINFRAME.pack(fill="both", expand=True)
+
+        self.LB_TESTFRM = CTkLabel(master=self.MAINFRAME, text="TEST_LB", height=25, fg_color=("#212121", "#212121"), 
+                                   bg_color=("#212121", "gray13"), text_color=("#ffffff", "#ffffff"), 
+                                   font=CTkFont(family="Courier New", size=16, weight="bold"))
+        self.LB_TESTFRM.pack(padx=(15, 0), pady=(20, 0), anchor="w")
 
     def go_home(self, event=None):
         # Call the controller's method to switch to the home page
