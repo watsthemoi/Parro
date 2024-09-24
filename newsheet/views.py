@@ -23,8 +23,9 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.LB_TITLE.pack(padx=(5, 0), pady=(20, 20))
         self.LB_TITLE.bind("<Button-1>", self.go_home)
 
-        self.LB_COMPOSITIONS = CTkLabel(master=self.OPTIONSFRAME, text="File", height=25, text_color=("#ffffff", "#ffffff"), font=CTkFont(size=15, family="Courier New", weight="bold"))
-        self.LB_COMPOSITIONS.pack(padx=(15, 0), pady=(10, 0), anchor="w")
+        self.LB_FL = CTkLabel(master=self.OPTIONSFRAME, text="File", height=25, text_color=("#ffffff", "#ffffff"), 
+                                        font=CTkFont(size=15, family="Courier New", weight="bold"))
+        self.LB_FL.pack(padx=(15, 0), pady=(10, 0), anchor="w")
 
         self.BTN_ADD = CTkButton(master=self.OPTIONSFRAME, text="Add Audio", text_color=("#ffffff", "#ffffff"), 
                                   anchor="w", width=180, 
@@ -33,7 +34,29 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                   hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
         self.BTN_ADD.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
-        self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, text="-----------------------------------------------------------------------------------", anchor="s", justify="center", height=0, text_color=("gray14", "#808080"), font=CTkFont(size=9))
+        self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, 
+                                  text="-----------------------------------------------------------------------------------", anchor="s", justify="center", height=0, text_color=("gray14", "#808080"), font=CTkFont(size=9))
+        self.LB_HZLINE.pack(pady=(10, 0))
+
+        self.LB_INTER = CTkLabel(master=self.OPTIONSFRAME, text="Interact", height=25, text_color=("#ffffff", "#ffffff"), 
+                                        font=CTkFont(size=15, family="Courier New", weight="bold"))
+        self.LB_INTER.pack(padx=(15, 0), pady=(10, 0), anchor="w")
+
+        self.BTN_PLAY = CTkButton(master=self.OPTIONSFRAME, text="Play", text_color=("#ffffff", "#ffffff"), 
+                                  anchor="w", width=180, 
+                                  image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
+                                  size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+        self.BTN_PLAY.pack(padx=(10, 0), pady=(10, 0), anchor="w")
+        self.BTN_EDIT = CTkButton(master=self.OPTIONSFRAME, text="Edit Composition", text_color=("#ffffff", "#ffffff"), 
+                                  anchor="w", width=180, 
+                                  image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
+                                  size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+        self.BTN_EDIT.pack(padx=(10, 0), pady=(10, 0), anchor="w")
+
+        self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, 
+                                  text="-----------------------------------------------------------------------------------", anchor="s", justify="center", height=0, text_color=("gray14", "#808080"), font=CTkFont(size=9))
         self.LB_HZLINE.pack(pady=(10, 0))
 
         # Main frame
