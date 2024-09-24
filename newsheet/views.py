@@ -59,16 +59,41 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                   text="-----------------------------------------------------------------------------------", anchor="s", justify="center", height=0, text_color=("gray14", "#808080"), font=CTkFont(size=9))
         self.LB_HZLINE.pack(pady=(10, 0))
 
-        # Play Tools Frame; Accessed after Adding Audio
-        # Edit Tools Frame; Accessed after Clicking Edit Composition
+        # Mainframe
+        self.MFRM = CTkFrame(master=self, width=590, height=514, bg_color=("gray92", "#3e3e3e"), 
+                                  fg_color=("gray90", "#3e3e3e"))
+        self.MFRM.pack_propagate(False)
+        self.MFRM.pack(fill="both", expand=True)
+
+        # Play Tools Frame; Accessed after Adding Audio and Successfully Producing Composition
+        self.PLAY_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
+                                  fg_color=("gray90", "#3e3e3e"))
+        self.PLAY_FRM.pack_propagate(False)
+        self.PLAY_FRM.pack(fill="both", expand=True)
+
+        self.LB_TESTFRM = CTkLabel(master=self.PLAY_FRM, text="TEST_LB", height=25, fg_color=("#212121", "#212121"), 
+                                   bg_color=("#212121", "gray13"), text_color=("#ffffff", "#ffffff"), 
+                                   font=CTkFont(family="Courier New", size=16, weight="bold"))
+        self.LB_TESTFRM.pack(padx=(15, 0), pady=(20, 0), anchor="w")
+
+        # Edit Tools Frame; Accessed after Successfully Producing Composition Clicking Edit Composition
+        self.EDIT_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
+                                  fg_color=("gray90", "#3e3e3e"))
+        self.EDIT_FRM.pack_propagate(False)
+        self.EDIT_FRM.pack(fill="both", expand=True)
+
+        self.LB_TESTFRM = CTkLabel(master=self.EDIT_FRM, text="TEST_LB", height=25, fg_color=("#212121", "#212121"), 
+                                   bg_color=("#212121", "gray13"), text_color=("#ffffff", "#ffffff"), 
+                                   font=CTkFont(family="Courier New", size=16, weight="bold"))
+        self.LB_TESTFRM.pack(padx=(15, 0), pady=(20, 0), anchor="w")
 
         # Composition Frame
-        self.MAINFRAME = CTkFrame(master=self, width=590, height=514, bg_color=("gray92", "#3e3e3e"), 
+        self.COMP_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
                                   fg_color=("gray90", "#3e3e3e"))
-        self.MAINFRAME.pack_propagate(False)
-        self.MAINFRAME.pack(fill="both", expand=True)
+        self.COMP_FRM.pack_propagate(False)
+        self.COMP_FRM.pack(fill="both", expand=True)
 
-        self.LB_TESTFRM = CTkLabel(master=self.MAINFRAME, text="TEST_LB", height=25, fg_color=("#212121", "#212121"), 
+        self.LB_TESTFRM = CTkLabel(master=self.COMP_FRM, text="TEST_LB", height=25, fg_color=("#212121", "#212121"), 
                                    bg_color=("#212121", "gray13"), text_color=("#ffffff", "#ffffff"), 
                                    font=CTkFont(family="Courier New", size=16, weight="bold"))
         self.LB_TESTFRM.pack(padx=(15, 0), pady=(20, 0), anchor="w")
