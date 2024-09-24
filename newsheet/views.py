@@ -71,10 +71,12 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.PLAY_FRM.pack_propagate(False)
         self.PLAY_FRM.pack(fill="both", expand=True)
 
-        self.LB_TESTFRM = CTkLabel(master=self.PLAY_FRM, text="TEST_LB", height=25, fg_color=("#212121", "#212121"), 
-                                   bg_color=("#212121", "gray13"), text_color=("#ffffff", "#ffffff"), 
-                                   font=CTkFont(family="Courier New", size=16, weight="bold"))
-        self.LB_TESTFRM.pack(padx=(15, 0), pady=(20, 0), anchor="w")
+        self.BTN_PLAY = CTkButton(master=self.PLAY_FRM, text="PLAY", text_color=("#ffffff", "#ffffff"), 
+                                  anchor="w", width=180, 
+                                  image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
+                                  size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+        self.BTN_PLAY.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         # Edit Tools Frame; Accessed after Successfully Producing Composition Clicking Edit Composition
         self.EDIT_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
@@ -82,10 +84,12 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.EDIT_FRM.pack_propagate(False)
         self.EDIT_FRM.pack(fill="both", expand=True)
 
-        self.LB_TESTFRM = CTkLabel(master=self.EDIT_FRM, text="TEST_LB", height=25, fg_color=("#212121", "#212121"), 
-                                   bg_color=("#212121", "gray13"), text_color=("#ffffff", "#ffffff"), 
-                                   font=CTkFont(family="Courier New", size=16, weight="bold"))
-        self.LB_TESTFRM.pack(padx=(15, 0), pady=(20, 0), anchor="w")
+        self.BTN_E1 = CTkButton(master=self.EDIT_FRM, text="Edit Composition", text_color=("#ffffff", "#ffffff"), 
+                                  anchor="w", width=180, 
+                                  image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
+                                  size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+        self.BTN_E1.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         # Composition Frame
         self.COMP_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
