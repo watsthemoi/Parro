@@ -1,5 +1,6 @@
 from tkinter import PhotoImage
 from customtkinter import *
+from newsheet.controller import NewSheetController
 from PIL import Image
 import platform
 
@@ -13,6 +14,8 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
             cursor_style = "pointinghand"
         else:  # Windows or other OS
             cursor_style = "hand2"
+
+        self.controller = NewSheetController(self)    
 
         # Left options frame
         self.OPTIONSFRAME = CTkFrame(master=self, width=225, fg_color=("#212121", "#212121"), bg_color=("#212121", "#212121"))
@@ -31,7 +34,8 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                   anchor="w", width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
-                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"),
+                                  command=self.add_audio_file)
         self.BTN_ADD.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, 
@@ -101,6 +105,9 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
 
         self.text_dis = CTkTextbox(self.COMP_FRM, width=200, height=200)
         self.text_dis.pack()     
+
+    def add_audio_file(self):
+        self.controller.add_audio_file()    
 
     def enable_buttons(self):
         """Enable the Play and Edit buttons."""
