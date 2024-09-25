@@ -14,5 +14,8 @@ class NewSheetController:
         )
 
         if file_path:
+            try:
             # Store the file in the model
-            self.models.store_file(file_path)
+                self.models.store_file(file_path)
+            except Exception as e:
+                print("File Access Error: ", e)    
