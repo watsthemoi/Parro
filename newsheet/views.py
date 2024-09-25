@@ -31,7 +31,8 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                   anchor="w", width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
-                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"),
+                                  command=self.enable)
         self.BTN_ADD.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, 
