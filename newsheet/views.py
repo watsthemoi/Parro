@@ -31,8 +31,7 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                   anchor="w", width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
-                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"),
-                                  command=self.askforfile)
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
         self.BTN_ADD.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, 
@@ -101,18 +100,12 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.COMP_FRM.pack(fill="both", expand=True)
 
         self.text_dis = CTkTextbox(self.COMP_FRM, width=200, height=200)
-        self.text_dis.pack()
+        self.text_dis.pack()     
 
-    def askforfile(self): # Command placeholder for controller
-        pass
-
-    def display(self, text):
-        self.text_dis.delete("1.0", END)
-        self.text_dis.insert("1.0", text) 
-
-    def enable(self): # Enables buttons
-        self.BTN_PLAY.configure(state="normal")    
-        self.BTN_EDIT.configure(state="normal")       
+    def enable_buttons(self):
+        """Enable the Play and Edit buttons."""
+        self.BTN_PLAY.configure(state="normal")
+        self.BTN_EDIT.configure(state="normal")    
 
     def go_home(self, event=None):
         # Call the controller's method to switch to the home page

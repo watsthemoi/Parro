@@ -38,7 +38,7 @@ class ViewManager(ctk.CTk):
     def show_newsheet(self):
         self.clear_frame()
 
-        new_sheet = NewSheetView(self)
+        new_sheet = NewSheetView(self) 
         new_sheet.configure(fg_color=['gray92','gray14'])
         new_sheet.pack(fill="both", expand=True)    
 

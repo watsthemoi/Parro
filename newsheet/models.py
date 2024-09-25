@@ -1,9 +1,14 @@
 
 
-class Model:
+class NewSheetModel:
     def __init__(self):
-        super().__init__()
+        self.audio_file_path = None
 
-    def load_file_data(self, path):
-        with open(path, 'r') as file:
-            self.data = file.read()    
+    def store_file(self, file_path):
+        """Store the selected file's path in the model."""
+        self.audio_file_path = file_path
+
+    def get_file(self):
+        """Retrieve the stored file's path."""
+        return self.audio_file_path
+
