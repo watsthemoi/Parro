@@ -46,13 +46,15 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                   anchor="w", width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
-                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"), 
+                                  state="disabled")
         self.BTN_PLAY.pack(padx=(10, 0), pady=(10, 0), anchor="w")
         self.BTN_EDIT = CTkButton(master=self.OPTIONSFRAME, text="Edit Composition", text_color=("#ffffff", "#ffffff"), 
                                   anchor="w", width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
-                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"),
+                                  state="disabled")
         self.BTN_EDIT.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         self.LB_HZLINE = CTkLabel(master=self.OPTIONSFRAME, 
@@ -71,12 +73,12 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.PLAY_FRM.pack_propagate(False)
         self.PLAY_FRM.pack(fill="both", expand=True)
 
-        self.BTN_PLAY = CTkButton(master=self.PLAY_FRM, text="PLAY", text_color=("#ffffff", "#ffffff"), 
+        self.BTN_TRI = CTkButton(master=self.PLAY_FRM, text="PLAY", text_color=("#ffffff", "#ffffff"), 
                                   anchor="w", width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
                                   hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
-        self.BTN_PLAY.pack(padx=(10, 0), pady=(10, 0), anchor="w")
+        self.BTN_TRI.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         # Edit Tools Frame; Accessed after Successfully Producing Composition Clicking Edit Composition
         self.EDIT_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
@@ -101,6 +103,13 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                    bg_color=("#212121", "gray13"), text_color=("#ffffff", "#ffffff"), 
                                    font=CTkFont(family="Courier New", size=16, weight="bold"))
         self.LB_TESTFRM.pack(padx=(15, 0), pady=(20, 0), anchor="w")
+
+    def encommand(self, command):
+        self.BTN_ADD.configure(command=command)
+
+    def enable(self): # Enables buttons
+        self.BTN_PLAY.configure(state="normal")    
+        self.BTN_EDIT.configure(state="normal")
 
     def go_home(self, event=None):
         # Call the controller's method to switch to the home page
