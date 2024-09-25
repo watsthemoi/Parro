@@ -5,7 +5,7 @@ import platform
 from newrecord.controller import Recorder
 
 class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
-    rec = Recorder(channels=2)
+    rec = Recorder(channels=1)
     running = None
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
