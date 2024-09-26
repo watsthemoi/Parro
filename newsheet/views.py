@@ -152,7 +152,7 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
 
      # Showing and hiding Play Mode
     def show_pbtf(self):
-        self.slide_anim.slide(self.PLAY_BTN_FRM, self.COMP_FRM, direction="left")
+        self.slide_anim.slide(self.PLAY_BTN_FRM, self.COMP_FRM, direction="down")
 
 #    def slide_down(self, position):
 #        if position < 0:  # Continue sliding until it reaches y = 0

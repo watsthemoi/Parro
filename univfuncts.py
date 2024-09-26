@@ -11,19 +11,25 @@ class UniversalPageFunctions:
         """Sliding Animation Parameters"""
         frame_out.place_forget()
 
-        match direction:
-            case "left":
-                frame_in.place(x=-frame_in.winfo_width(), y=frame_in.winfo_y())
-                target_x = 0
-            case "right":
-                frame_in.place(x=self.parent.winfo_width(), y=frame_in.winfo_y())
-                target_x = self.parent.winfo_width() - frame_in.winfo_width()
-            case "up":
-                frame_in.place(x=frame_in.winfo_x(), y=-frame_in.winfo_height())
-                target_y = 0
-            case "down":
-                frame_in.place(x=-frame_in.winfo_width(), y=frame_in.winfo_y())
-                target_y = self.parent.winfo_height() - frame_in.winfo_height()  
+        
+        if direction == "left":
+            frame_in.place(x=-frame_in.winfo_width(), y=frame_in.winfo_y())
+            target_x = 0
+            target_y = frame_in.winfo_y()
+        elif direction == "right":
+            frame_in.place(x=self.parent.winfo_width(), y=frame_in.winfo_y())
+            target_x = self.parent.winfo_width() - frame_in.winfo_width()
+            target_y = frame_in.winfo_y()
+        elif direction == "up":
+            frame_in.place(x=frame_in.winfo_x(), y=-frame_in.winfo_height())
+            target_x = frame_in.winfo_x()
+            target_y = 0
+        elif direction == "down":
+            frame_in.place(x=-frame_in.winfo_width(), y=frame_in.winfo_y())
+            target_x = frame_in.winfo_x()
+            target_y = self.parent.winfo_height() - frame_in.winfo_height()
+        else:
+            raise ValueError("Invalid direction")      
 
         self.animate_slide(frame_in, target_x, target_y if 'y' in locals() else None, duration)
 
