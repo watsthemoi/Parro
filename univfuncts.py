@@ -7,10 +7,9 @@ class UniversalPageFunctions:
         super().__init__()
         self.parent = parent
 
-    def slide(self, frame_in, frame_out, direction, duration=300):
+    def slide(self, frame_in, frame_out, direction="left", duration=300):
         """Sliding Animation Parameters"""
         frame_out.place_forget()
-
         
         if direction == "left":
             frame_in.place(x=-frame_in.winfo_width(), y=frame_in.winfo_y())
@@ -31,9 +30,10 @@ class UniversalPageFunctions:
         else:
             raise ValueError("Invalid direction")      
 
-        self.animate_slide(frame_in, target_x, target_y if 'y' in locals() else None, duration)
+        self.animate_slide(frame_in, target_x, target_y, duration)
 
-    def animate_slide(self, frame, target_x, target_y=None, duration=300):
+    def animate_slide(self, frame, target_x, target_y, duration=300):
+        """Handles sliding animation using update method"""
         change_x = (target_x - frame.winfo_x()) / (duration / 10)
         change_y = (target_y - frame.winfo_y()) / (duration / 10) if target_y is not None else 0
 
