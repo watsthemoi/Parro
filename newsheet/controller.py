@@ -8,14 +8,16 @@ class NewSheetController:
 
     def add_audio_file(self):
         # Open file dialog to select an audio file
-        file_path = filedialog.askopenfilename(
+        file = filedialog.askopenfilename(
             title="Select an Audio File",
             filetypes=(("Audio Files", "*.mp3;*.wav"), ("All Files", "*.*"))
         )
 
-        if file_path:
+        if file:
             try:
             # Store the file in the model
-                self.models.store_file(file_path)
+                self.models.store_file(file)
+                return file
             except Exception as e:
-                print("File Access Error: ", e)    
+                print("File Access Error: ", e)   
+        return None

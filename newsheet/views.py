@@ -101,13 +101,17 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.COMP_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
                                   fg_color=("gray90", "#3e3e3e"))
         self.COMP_FRM.pack_propagate(False)
-        self.COMP_FRM.pack(fill="both", expand=True)
+        self.COMP_FRM.pack(fill="both", expand=True) 
 
-        self.text_dis = CTkTextbox(self.COMP_FRM, width=200, height=200)
-        self.text_dis.pack()     
+        self.LB_AUDIO_FILE = CTkLabel(master=self.COMP_FRM, text="No file selected", text_color=("#ffffff", "#ffffff"),
+                                       font=CTkFont(size=15, family="Courier New"))
+        self.LB_AUDIO_FILE.pack(padx=(10, 0), pady=(10, 0))
 
     def add_audio_file(self):
-        self.controller.add_audio_file()    
+        file = self.controller.add_audio_file()    
+        if file:  # Update the label if a file is selected
+            self.LB_AUDIO_FILE.configure(text=file.split("/")[-1])  # Get the filename
+            self.enable_buttons()  # Enable buttons after selecting a file
 
     def enable_buttons(self):
         """Enable the Play and Edit buttons."""
