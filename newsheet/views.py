@@ -51,7 +51,7 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
                                   hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"), 
-                                  state="disabled")
+                                  state="disabled", command=self.show_play_btn_frame)
         self.BTN_PLAY.pack(padx=(10, 0), pady=(10, 0), anchor="w")
         self.BTN_EDIT = CTkButton(master=self.OPTIONSFRAME, text="Edit Composition", text_color=("#ffffff", "#ffffff"), 
                                   anchor="w", width=180, 
@@ -72,30 +72,40 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.MFRM.pack(fill="both", expand=True)
 
         # Play Tools Frame; Accessed after Adding Audio and Successfully Producing Composition
-        self.PLAY_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
-                                  fg_color=("gray90", "#3e3e3e"))
-        self.PLAY_FRM.pack_propagate(False)
-        self.PLAY_FRM.pack(fill="both", expand=True)
+        # self.PLAY_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
+        #                          fg_color=("gray90", "#3e3e3e"))
+        # self.PLAY_FRM.pack_propagate(False)
+        # self.PLAY_FRM.pack(fill="both", expand=True)
 
-        self.BTN_TRI = CTkButton(master=self.PLAY_FRM, text="PLAY", text_color=("#ffffff", "#ffffff"), 
+        self.PLAY_BTN_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
+                                    fg_color=("gray90", "#3e3e3e"))
+        self.PLAY_BTN_FRM.pack_propagate(False)
+
+        self.BTN_TRI = CTkButton(master=self.PLAY_BTN_FRM, text="PLAY", text_color=("#ffffff", "#ffffff"), 
                                   anchor="w", width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
                                   hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
         self.BTN_TRI.pack(padx=(10, 0), pady=(10, 0), anchor="w")
-
-        # Edit Tools Frame; Accessed after Successfully Producing Composition Clicking Edit Composition
-        self.EDIT_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
-                                  fg_color=("gray90", "#3e3e3e"))
-        self.EDIT_FRM.pack_propagate(False)
-        self.EDIT_FRM.pack(fill="both", expand=True)
-
-        self.BTN_E1 = CTkButton(master=self.EDIT_FRM, text="Edit Composition", text_color=("#ffffff", "#ffffff"), 
+        self.BTN_STOP = CTkButton(master=self.PLAY_BTN_FRM, text="STOP", text_color=("#ffffff", "#ffffff"), 
                                   anchor="w", width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
                                   hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
-        self.BTN_E1.pack(padx=(10, 0), pady=(10, 0), anchor="w")
+        self.BTN_STOP.pack(padx=(10, 0), pady=(10, 0), anchor="w")
+
+        # Edit Tools Frame; Accessed after Successfully Producing Composition Clicking Edit Composition
+        # self.EDIT_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
+        #                          fg_color=("gray90", "#3e3e3e"))
+        #self.EDIT_FRM.pack_propagate(False)
+        #self.EDIT_FRM.pack(fill="both", expand=True)
+
+        #self.BTN_E1 = CTkButton(master=self.EDIT_FRM, text="Edit Composition", text_color=("#ffffff", "#ffffff"), 
+        #                          anchor="w", width=180, 
+        #                          image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
+        #                          size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
+        #                          hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"))
+        #self.BTN_E1.pack(padx=(10, 0), pady=(10, 0), anchor="w")
 
         # Composition Frame
         self.COMP_FRM = CTkFrame(master=self.MFRM, width=200, height=200, bg_color=("gray92", "#3e3e3e"), 
@@ -108,6 +118,7 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.LB_AUDIO_FILE.pack(padx=(10, 0), pady=(10, 0))
 
     def add_audio_file(self):
+        """Add File Function"""
         file = self.controller.add_audio_file()    
         if file:  # Update the label if a file is selected
             self.LB_AUDIO_FILE.configure(text=file.split("/")[-1])  # Get the filename
@@ -117,6 +128,21 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         """Enable the Play and Edit buttons."""
         self.BTN_PLAY.configure(state="normal")
         self.BTN_EDIT.configure(state="normal")    
+
+    # Showing and hiding Play Mode
+    def show_play_btn_frame(self):
+        self.PLAY_BTN_FRM.place(y=-100)  # Start off-screen
+        self.slide_down(-100)  # Slide down into view
+
+    def slide_down(self, position):
+        if position < 0:  # Continue sliding until it reaches y = 0
+            self.PLAY_BTN_FRM.place(y=position)
+            self.COMP_FRM.place(y=position + 100)  # Push COMP_FRM down by the height of PLAY_PAUSE_FRM
+            self.after(10, self.slide_down, position + 5)  # Call again with updated position
+        else:
+            self.PLAY_BTN_FRM.place(y=0)  # Ensure it's placed correctly at the end
+            self.COMP_FRM.place(y=100)  # Correct position of COMP_FRM
+   
 
     def go_home(self, event=None):
         # Call the controller's method to switch to the home page
