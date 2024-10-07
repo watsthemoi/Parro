@@ -1,7 +1,8 @@
-from tkinter import PhotoImage
+from tkinter import PhotoImage, filedialog
 import customtkinter as ctk
 from homepage.views import HomePageView
 from newrecord.views import NewRecordView
+from newsheet.views import NewSheetView
 import platform
 
 class ViewManager(ctk.CTk):
@@ -12,8 +13,7 @@ class ViewManager(ctk.CTk):
         self.title("Parro")
         photo = PhotoImage(file = "assets/Assets/music-note.png")
         self.iconphoto(True, photo)
-
-
+        
         # Initially set the home page
         self.show_homepage()
 
@@ -35,7 +35,21 @@ class ViewManager(ctk.CTk):
         new_record.configure(fg_color=['gray92', 'gray14'])
         new_record.pack(fill="both", expand=True)
 
+    def show_newsheet(self):
+        self.clear_frame()
+
+        new_sheet = NewSheetView(self) 
+        new_sheet.configure(fg_color=['gray92','gray14'])
+        new_sheet.pack(fill="both", expand=True)    
+
     def clear_frame(self):
         # Remove all widgets in the current frame
         for widget in self.winfo_children():
             widget.destroy()
+
+
+                
+
+    
+    
+               
