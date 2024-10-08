@@ -1,9 +1,15 @@
 from tkinter import PhotoImage
 from customtkinter import *
 from PIL import Image
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import librosa.display
 import platform
+from newrecord.controller import Recorder
 
 class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
+    rec = Recorder(channels=1)
+    running = None
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
@@ -69,14 +75,14 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.FILEFRAME1.pack_propagate(False)
         self.FILEFRAME1.pack(padx=(5, 0), side="left")
 
-        self.BTN_VIEW = CTkButton(master=self.FILEFRAME1, text="Start", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14))
+        self.BTN_VIEW = CTkButton(master=self.FILEFRAME1, text="Start", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14), command=self.start)
         self.BTN_VIEW.pack(pady=(20, 0), side="top", anchor="e")
 
         self.FILEFRAME2 = CTkFrame(master=self.FILESFRAME, width=100, height=100, fg_color="transparent", bg_color="transparent")
         self.FILEFRAME2.pack_propagate(False)
         self.FILEFRAME2.pack(padx=(5, 0), side="left")
 
-        self.BTN_VIEW = CTkButton(master=self.FILEFRAME2, text="Stop", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14))
+        self.BTN_VIEW = CTkButton(master=self.FILEFRAME2, text="Stop", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=100, font=CTkFont(family="Courier New", size=14), command=self.stop)
         self.BTN_VIEW.pack(pady=(20, 0), side="top", anchor="w")
 
         self.FILEFRAME3 = CTkFrame(master=self.FILESFRAME, width=400, height=70, fg_color="transparent", bg_color="transparent")
@@ -91,13 +97,64 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.SLDR_GAINCONTROL.set(0)
         self.SLDR_GAINCONTROL.pack(padx=(0, 0), pady=(0,0), side="left")
 
-        self.AUD_FRM = CTkFrame(master=self.MAINFRAME, width=590, height=514, bg_color=("gray92", "#3e3e3e"), fg_color=("gray90", "#3e3e3e"))
+        self.AUD_FRM = CTkFrame(master=self.MAINFRAME, width=300, height=200, bg_color=("gray92", "#3e3e3e"), fg_color=("gray90", "#3e3e3e"))
         self.AUD_FRM.pack_propagate(False)
         self.AUD_FRM.pack(fill="both")
 
-        self.TEST = CTkButton(master=self.AUD_FRM, text="THIS IS THE WAVEFORM FRAME", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=300, font=CTkFont(family="Courier New", size=14))
-        self.TEST.pack(side="top")
+        # Initialize Matplotlib Figure
+        self.fig, self.ax = plt.subplots(figsize=(5, 2))
+        self.fig.patch.set_facecolor("#3e3e3e")
+        self.ax.set_facecolor("#3e3e3e")
+        self.ax.axis('off')
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self.AUD_FRM)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def go_home(self, event=None):
         # Call the controller's method to switch to the home page
         self.master.show_homepage()
+
+    def start(self):
+        global running
+        if self.running is None:
+            self.running = NewRecordView.rec.open('recording.wav', 'wb')
+            self.running.start_recording()
+            self.update_waveform()
+            
+    def stop(self):
+        global running
+        if self.running is not None:
+            self.running.stop_recording()
+            self.running.close()
+            self.running = None
+
+    def update_waveform(self):
+        if self.running is not None:
+            # Clear the plot
+            self.ax.clear()
+
+            # Set the background color of the plot to match the app
+            self.ax.set_facecolor("#3e3e3e")  # Use the desired gray color for background
+
+            # Get the current audio data
+            audio_data = self.running.get_audio_data()
+
+            if len(audio_data) > 0:
+                # Ensure the audio data is flattened (1D array) before plotting
+                flattened_audio = audio_data.flatten()
+
+                # Down Sample the audio to make it look better on the graph
+                down_sampled_audio = librosa.resample(flattened_audio, orig_sr=self.rec.rate, target_sr=self.rec.rate // 10)
+
+                # Plot the waveform using librosa with white line for the waveform
+                librosa.display.waveshow(down_sampled_audio, sr=self.rec.rate, ax=self.ax, color='white', linewidth=3)
+
+                # Set axis limits to ensure the waveform is visible
+                self.ax.set_ylim([-1, 1])  # Adjust this range based on your data scale
+
+            self.ax.axis('off')
+
+            # Redraw the canvas
+            self.canvas.draw()
+
+        # Schedule the next update if still running
+        self.after(100, self.update_waveform)

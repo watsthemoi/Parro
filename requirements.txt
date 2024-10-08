@@ -1,2 +1,10 @@
 customtkinter
 Pillow
+PyAudio
+wave
+scipy
+sounddevice
+numpy
+soundfile 
+matplotlib
+librosa
