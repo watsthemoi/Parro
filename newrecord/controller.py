@@ -62,6 +62,13 @@ class RecordingFile(object):
         int16_audio = np.int16(audio_data * 32767)  # Convert float32 to int16
         self.wavefile.writeframes(int16_audio.tobytes())  # Save to WAV
 
+    def get_audio_data(self):
+        # Return a numpy array of the recorded frames
+        if len(self.frames) > 0:
+            return np.concatenate(self.frames, axis=0)
+        else:
+            return np.array([])
+
     def callback(self, indata, frames, time, status):
         '''Callback to process incoming audio data'''
         if status:

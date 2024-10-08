@@ -1,6 +1,9 @@
 from tkinter import PhotoImage
 from customtkinter import *
 from PIL import Image
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import librosa.display
 import platform
 from newrecord.controller import Recorder
 
@@ -94,12 +97,14 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.SLDR_GAINCONTROL.set(0)
         self.SLDR_GAINCONTROL.pack(padx=(0, 0), pady=(0,0), side="left")
 
-        self.AUD_FRM = CTkFrame(master=self.MAINFRAME, width=590, height=514, bg_color=("gray92", "#3e3e3e"), fg_color=("gray90", "#3e3e3e"))
+        self.AUD_FRM = CTkFrame(master=self.MAINFRAME, width=300, height=200, bg_color=("gray92", "#3e3e3e"), fg_color=("gray90", "#3e3e3e"))
         self.AUD_FRM.pack_propagate(False)
         self.AUD_FRM.pack(fill="both")
 
-        self.TEST = CTkButton(master=self.AUD_FRM, text="THIS IS THE WAVEFORM FRAME", fg_color=("#c0c0c0", "#808080"), bg_color="transparent", hover_color=("#808080", "#2a2a2a"), width=300, font=CTkFont(family="Courier New", size=14))
-        self.TEST.pack(side="top")
+        # Initialize Matplotlib Figure
+        self.fig, self.ax = plt.subplots(figsize=(5, 2))
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self.AUD_FRM)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def go_home(self, event=None):
         # Call the controller's method to switch to the home page
@@ -110,10 +115,35 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         if self.running is None:
             self.running = NewRecordView.rec.open('recording.wav', 'wb')
             self.running.start_recording()
-    
+            self.update_waveform()
+            
     def stop(self):
         global running
         if self.running is not None:
             self.running.stop_recording()
             self.running.close()
             self.running = None
+
+    def update_waveform(self):
+        if self.running is not None:
+            # Clear the plot
+            self.ax.clear()
+
+            # Get the current audio data
+            audio_data = self.running.get_audio_data()
+
+            if len(audio_data) > 0:
+                # Ensure the audio data is flattened (1D array) before plotting
+                flattened_audio = audio_data.flatten()
+
+                # Plot the waveform using librosa
+                librosa.display.waveshow(flattened_audio, sr=self.rec.rate, ax=self.ax)
+
+                # Set axis limits to ensure the waveform is visible
+                self.ax.set_ylim([-1, 1])  # Adjust this range based on your data scale
+
+            # Redraw the canvas
+            self.canvas.draw()
+
+        # Schedule the next update if still running
+        self.after(100, self.update_waveform)
