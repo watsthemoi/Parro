@@ -103,6 +103,9 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
 
         # Initialize Matplotlib Figure
         self.fig, self.ax = plt.subplots(figsize=(5, 2))
+        self.fig.patch.set_facecolor("#3e3e3e")
+        self.ax.set_facecolor("#3e3e3e")
+        self.ax.axis('off')
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.AUD_FRM)
         self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
@@ -129,6 +132,9 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
             # Clear the plot
             self.ax.clear()
 
+            # Set the background color of the plot to match the app
+            self.ax.set_facecolor("#3e3e3e")  # Use the desired gray color for background
+
             # Get the current audio data
             audio_data = self.running.get_audio_data()
 
@@ -136,11 +142,16 @@ class NewRecordView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
                 # Ensure the audio data is flattened (1D array) before plotting
                 flattened_audio = audio_data.flatten()
 
-                # Plot the waveform using librosa
-                librosa.display.waveshow(flattened_audio, sr=self.rec.rate, ax=self.ax)
+                # Down Sample the audio to make it look better on the graph
+                down_sampled_audio = librosa.resample(flattened_audio, orig_sr=self.rec.rate, target_sr=self.rec.rate // 10)
+
+                # Plot the waveform using librosa with white line for the waveform
+                librosa.display.waveshow(down_sampled_audio, sr=self.rec.rate, ax=self.ax, color='white', linewidth=3)
 
                 # Set axis limits to ensure the waveform is visible
                 self.ax.set_ylim([-1, 1])  # Adjust this range based on your data scale
+
+            self.ax.axis('off')
 
             # Redraw the canvas
             self.canvas.draw()
