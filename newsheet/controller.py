@@ -3,11 +3,15 @@ from tkinter import filedialog, messagebox
 from newsheet.models import NewSheetModel
 from basic_pitch.inference import predict
 from basic_pitch import ICASSP_2022_MODEL_PATH
+import os
+import shutil
+import pretty_midi
 
 class NewSheetController:
     def __init__(self, root):
         self.models = NewSheetModel()
         self.note_events = []
+        midi_file = "midifile.mid"
 
     def add_audio_file(self):
         # Open file dialog to select an audio file
@@ -29,8 +33,14 @@ class NewSheetController:
         """Processes file for pitch data with predict()"""
         try:
             model_output, midi_data, note_events = predict(file)
+            
             self.note_events.extend(note_events)  # Store note events
             self.models.store_note_events(note_events)    
+
+            file_str = os.path.basename(file)
+            name, _ = os.path.splitext(file_str)
+            midi_data.write(f'{name}.mid')
+
             return note_events
         except Exception as e:
-            raise e       
+            raise e                 
