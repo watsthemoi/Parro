@@ -38,7 +38,7 @@ class NewSheetController:
     def process_file(self, file):
         """Processes file for pitch data with predict()"""
         try:
-            model_output, midi_data, note_events = predict(file)
+            model_output, midi_data, note_events = predict(file, ICASSP_2022_MODEL_PATH)
             
             self.note_events.extend(note_events)  # Store note events
             self.models.store_note_events(note_events)    
