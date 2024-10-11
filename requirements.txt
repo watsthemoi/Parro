@@ -8,3 +8,4 @@ numpy
 soundfile 
 matplotlib
 librosa
+basic-pitch

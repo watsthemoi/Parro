@@ -4,27 +4,26 @@ from newsheet.models import NewSheetModel
 from basic_pitch.inference import predict
 from basic_pitch import ICASSP_2022_MODEL_PATH
 import os
-import shutil
-import pretty_midi
 
 class NewSheetController:
     def __init__(self, root):
         self.models = NewSheetModel()
         self.note_events = []
+        self.file = " "
         midi_file = "midifile.mid"
 
     def add_audio_file(self):
         # Open file dialog to select an audio file
-        file = filedialog.askopenfilename(
+        self.file = filedialog.askopenfilename(
             title="Select an Audio File",
             filetypes=(("Audio Files", "*.mp3;*.wav"), ("All Files", "*.*"))
         )
 
-        if file:
+        if self.file:
             try:
                 # Store the file in the model
-                self.models.store_infile(file)
-                return self.process_file(file)
+                self.models.store_infile(self.file)
+                return self.process_file(self.file)
             except Exception as e:
                 messagebox.showerror("Error", f"File Access Error: {e}")
         return None
