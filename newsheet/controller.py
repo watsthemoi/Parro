@@ -66,7 +66,6 @@ class NewSheetController:
         try:
             # Parse the MIDI file with music21
             score = converter.parse(midi_path)
-            print("rendering lilypond file")
 
             # Set the path to the bundled LilyPond binary
             project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
@@ -74,12 +73,10 @@ class NewSheetController:
 
             # Set the environment and user settings explicitly
             environment.UserSettings()['lilypondPath'] = lilypond_path
-            print(environment.UserSettings()['lilypondPath'])
 
             # Save the LilyPond file and specify PNG output
             score_file_path = '/Users/sarahculpepper/Documents/Senior Project/TranscriptApp/file.ly'
             score.write('lily', fp=score_file_path)
-            print(f"LilyPond file saved at {score_file_path}")
 
             # Now modify the .ly file before rendering it
             self.clean_ly_file(score_file_path)
@@ -98,7 +95,6 @@ class NewSheetController:
                 
             # Check if the PNG was generated and update the view
             if os.path.exists(output_pdf):
-                print(output_pdf)
                 self.update_view_with_score(output_pdf)
             else:
                 print("Failed to generate score image.")
@@ -123,14 +119,11 @@ class NewSheetController:
                 break
 
             if not skip_block:
-                print(line)
                 cleaned_lines.append(line)
 
         # Write the cleaned content back to the file
         with open(file_path, 'w') as file:
             file.writelines(cleaned_lines)
-
-        print(f"Cleaned .ly file saved at {file_path}")
 
     def add_white_padding(self, image):
         """Add white padding to the top of the image."""
