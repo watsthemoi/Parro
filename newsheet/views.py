@@ -27,27 +27,28 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.MFRM.pack()
 
         self.BTN_ADD = CTkButton(master=self.MFRM, text="Add Audio", text_color=("#ffffff", "#ffffff"), 
-                                  anchor="w", width=180, 
+                                  width=180, 
                                   image=CTkImage(Image.open(r"assets/Assets/baseline_save_(255, 255, 255)_18dp_1x.png"), 
                                   size=(18, 18)), fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
                                   hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"),
                                   command=self.add_audio_file)
-        self.BTN_ADD.pack(padx=(10, 0), pady=(10, 0), anchor="w")   
+        self.BTN_ADD.pack(padx=(10, 0), pady=(10, 0))   
 
-        self.BOX = CTkTextbox(self.MFRM)
-        self.BOX.pack(padx=(10, 0), pady=(10, 0), anchor="w") 
+        # Add a placeholder to display the score (PNG)
+        self.score_display = CTkLabel(self.MFRM, text="Score will appear here")
+        self.score_display.pack(padx=(10, 0), pady=(20, 0))
 
     def add_audio_file(self):
         """Add File Function"""
-        note_events = self.controller.add_audio_file()
-        if note_events is not None:
-            self.update_note_events_display(note_events)
+        self.controller.add_audio_file()
+        #if note_events is not None:
+            #self.update_note_events_display(note_events)
 
-    def update_note_events_display(self, note_events):
-        """Update the display with note events"""
-        self.BOX.delete("1.0", "end")  # Clear previous content
-        for index, item in enumerate(note_events):
-            self.BOX.insert("end", f"{index + 1}: {item}\n")  # Show note events in textbox              
+    #def update_note_events_display(self, note_events):
+        #"""Update the display with note events"""
+        #self.score_display.delete("1.0", "end")  # Clear previous content
+        #for index, item in enumerate(note_events):
+            #self.score_display.insert("end", f"{index + 1}: {item}\n")  # Show note events in textbox              
 
 #    def midi_to_note_octave(self, midi_pitch):
 #        # List of note names in an octave (C, C#, D, D#, E, F, F#, G, G#, A, A#, B)

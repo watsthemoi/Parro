@@ -5,6 +5,11 @@ from basic_pitch.inference import predict
 from basic_pitch import ICASSP_2022_MODEL_PATH
 import os
 import platform
+from music21 import converter, environment, lily
+import os
+import time
+import subprocess
+from PIL import Image, ImageTk, ImageChops
 
 class NewSheetController:
     def __init__(self, root):
@@ -12,6 +17,7 @@ class NewSheetController:
         self.note_events = []
         self.file = " "
         midi_file = "midifile.mid"
+        self.root = root
 
     def add_audio_file(self):
         # Open file dialog to select an audio file
@@ -46,7 +52,165 @@ class NewSheetController:
             file_str = os.path.basename(file)
             name, _ = os.path.splitext(file_str)
             midi_data.write(f'{name}.mid')
+            
+            time.sleep(1)
+            # Generate the score using music21
+            self.generate_music21_score("recording.mid")
 
             return note_events
         except Exception as e:
-            raise e                 
+            raise e                
+
+    def generate_music21_score(self, midi_path):
+        """Convert MIDI to music21 score and render as LilyPond"""
+        try:
+            # Parse the MIDI file with music21
+            score = converter.parse(midi_path)
+            print("rendering lilypond file")
+
+            # Set the path to the bundled LilyPond binary
+            project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
+            lilypond_path = os.path.join(project_dir, 'bin', 'lilypond', '2.24.4', 'bin', 'lilypond')
+
+            # Set the environment and user settings explicitly
+            environment.UserSettings()['lilypondPath'] = lilypond_path
+            print(environment.UserSettings()['lilypondPath'])
+
+            # Save the LilyPond file and specify PNG output
+            score_file_path = '/Users/sarahculpepper/Documents/Senior Project/TranscriptApp/file.ly'
+            score.write('lily', fp=score_file_path)
+            print(f"LilyPond file saved at {score_file_path}")
+
+            # Now modify the .ly file before rendering it
+            self.clean_ly_file(score_file_path)
+
+            try:
+                output_pdf = score_file_path.replace('.ly', '.pdf')  # Generate PDF for simplicity
+                # Call LilyPond to generate the PDF
+                process = subprocess.Popen(
+                [lilypond_path, score_file_path],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
+            except Exception as e:
+                print("failed to generate the png from pdf")
+                raise e
+                
+            # Check if the PNG was generated and update the view
+            if os.path.exists(output_pdf):
+                print(output_pdf)
+                self.update_view_with_score(output_pdf)
+            else:
+                print("Failed to generate score image.")
+
+        except Exception as e:
+            raise e
+        
+    def clean_ly_file(self, file_path):
+        """Clean the .ly file by removing unwanted sections."""
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+
+        cleaned_lines = []
+        skip_block = False
+
+        for line in lines:
+            if '}' in line:
+                skip_block = False
+            # Skip the entire \layout block and the RemoveEmptyStaffContext
+            if '\\layout {' in line or '\\RemoveEmptyStaffContext' in line or '\\override VerticalAxisGroup' in line:
+                skip_block = True
+                break
+
+            if not skip_block:
+                print(line)
+                cleaned_lines.append(line)
+
+        # Write the cleaned content back to the file
+        with open(file_path, 'w') as file:
+            file.writelines(cleaned_lines)
+
+        print(f"Cleaned .ly file saved at {file_path}")
+
+    def add_white_padding(self, image):
+        """Add white padding to the top of the image."""
+        width, height = image.size
+
+        # Create a new image with a white background
+        new_height = height + 20
+        padded_image = Image.new('RGB', (width, new_height), (255, 255, 255))  # White background
+
+        # Paste the original image on the new image, shifted down to create top padding
+        padded_image.paste(image, (0, 20))
+
+        return padded_image
+
+    def crop_image(self, image, padding=20):
+        bg = Image.new(image.mode, image.size, (255, 255, 255))  # White background for comparison
+        diff = ImageChops.difference(image, bg)
+        bbox = diff.getbbox()  # Find the bounding box of the non-white areas
+
+        if bbox:
+            # Add padding to the bounding box
+            left, upper, right, lower = bbox
+            left = max(left - padding, 0)
+            upper = max(upper - padding, 0)
+            right = min(right + padding, image.width)
+            lower = min(lower + padding, image.height)
+
+            # Crop the image with the padded bounding box
+            return image.crop((left, upper, right, lower))
+
+        return image  # Return original image if no white space detected
+    
+    def scale_image(self, image, max_width, max_height):
+        """Scale the image down to fit within max_width and max_height, maintaining aspect ratio."""
+        # Get the original dimensions of the image
+        width, height = image.size
+
+        # Calculate the aspect ratio
+        aspect_ratio = width / height
+
+        # Determine the new width and height while maintaining the aspect ratio
+        if width > max_width or height > max_height:
+            # Check if the image is wider or taller than the allowed dimensions
+            if aspect_ratio > 1:
+                # Wider than tall, scale by width
+                new_width = max_width
+                new_height = int(max_width / aspect_ratio)
+            else:
+                # Taller than wide, scale by height
+                new_height = max_height
+                new_width = int(max_height * aspect_ratio)
+        else:
+            # The image is smaller than the max dimensions, so return it as is
+            return image
+
+        # Resize the image while maintaining the aspect ratio
+        return image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+    def update_view_with_score(self, pdf_path):
+        """Display the rendered score (PDF or PNG) in the view."""
+        try:
+            # For simplicity, convert the PDF's first page to an image using Pillow
+            # You need to install 'pdf2image' package for this (pip install pdf2image)
+            from pdf2image import convert_from_path
+
+            project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
+            poppler_path = os.path.join(project_dir, 'bin', 'poppler', '24.04.0_1', 'bin')
+
+            images = convert_from_path(pdf_path, poppler_path=poppler_path)
+            if images:
+                image = images[0]   
+                cropped_image = self.crop_image(image)
+                padded_image = self.add_white_padding(cropped_image)
+
+                # Scale the image down while maintaining the aspect ratio (e.g., max width and height of 400)
+                scaled_image = self.scale_image(padded_image, max_width=800, max_height=800)
+                img_tk = ImageTk.PhotoImage(scaled_image)
+
+                self.root.score_display.configure(image=img_tk, text='')  # Update the image in the view
+                self.root.score_display.image = img_tk  # Keep a reference to avoid garbage collection
+
+        except Exception as e:
+            print(f"Error displaying score: {e}")
