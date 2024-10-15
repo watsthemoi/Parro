@@ -75,7 +75,7 @@ class NewSheetController:
             environment.UserSettings()['lilypondPath'] = lilypond_path
 
             # Save the LilyPond file and specify PNG output
-            score_file_path = '/Users/sarahculpepper/Documents/Senior Project/TranscriptApp/file.ly'
+            score_file_path = os.path.join(project_dir, 'file.ly')
             score.write('lily', fp=score_file_path)
 
             # Now modify the .ly file before rendering it
