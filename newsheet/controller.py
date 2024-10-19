@@ -68,8 +68,19 @@ class NewSheetController:
             score = converter.parse(midi_path)
 
             # Set the path to the bundled LilyPond binary
+            # No executable needed in PATH for MacOS
             project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
-            lilypond_path = os.path.join(project_dir, 'bin', 'lilypond', '2.24.4', 'bin', 'lilypond')
+            if platform.system() == "Darwin":  # macOS
+                lilypond_path = os.path.join(project_dir, 'bin', 
+                                             'lilypond', '2.24.4', 'bin', 'lilypond')
+        
+            else:  # Windows or other OS
+                lilypond_path = os.path.join(project_dir, 'bin', 'lilypond', 
+                                             'lilypond-2.24.4', 'bin', 'lilypond.exe')
+            
+
+            
+            #"C:\Users\newcr\Documents\TranscriptApp\bin\lilypond\lilypond-2.24.4\bin\lilypond.exe"
 
             # Set the environment and user settings explicitly
             environment.UserSettings()['lilypondPath'] = lilypond_path
