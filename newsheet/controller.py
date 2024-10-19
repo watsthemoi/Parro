@@ -197,7 +197,10 @@ class NewSheetController:
             from pdf2image import convert_from_path
 
             project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
-            poppler_path = os.path.join(project_dir, 'bin', 'poppler', '24.04.0_1', 'bin')
+            if platform.system() == "Darwin": 
+                poppler_path = os.path.join(project_dir, 'bin', 'poppler', '24.04.0_1', 'bin')
+            else:
+                poppler_path = os.path.join(project_dir, 'bin', 'poppler-24.08.0', 'Library', 'bin')
 
             images = convert_from_path(pdf_path, poppler_path=poppler_path)
             if images:
