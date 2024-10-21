@@ -1,0 +1,210 @@
+AUTHORS - who did what for GNU LilyPond
+***************************************
+
+
+This file lists authors of LilyPond, and what they wrote.  This list is
+alphabetically ordered by surname.  This file lists people that have
+contributed over 100 lines of code or the equivalent.
+
+Current Development Team
+------------------------
+
+   • Jean Abou Samra: <jean@abou-samra.fr>, Factotum
+
+   • Colin Campbell: <cpkc.music@shaw.ca>, Patch Meister
+
+   • Dan Eble: <nine.fierce.ballads@gmail.com>, Core developer
+
+   • Jonas Hahnfeld: <hahnjo@hahnjo.de> <https://www.hahnjo.de/> Core
+     developer, release unbreaker, GitLab manager
+
+   • Phil Holmes: <mail@philholmes.net> <http://www.philholmes.net>
+     Build unentangler, Bug squad member
+
+   • David Kastrup: <dak@gnu.org>, hard core developer, user and
+     programming interfaces, bug squashing and swamp drainage.
+
+   • Werner Lemberg: <wl@gnu.org>, Fonts, bug squasher
+
+   • Han-Wen Nienhuys: <hanwen@xs4all.nl>,
+     <https://www.xs4all.nl/~hanwen/>, Main author
+
+   • Francisco Vila: Translation Meister
+
+Previous Development Team
+-------------------------
+
+   • Mats Bengtsson: <mats.bengtsson@ee.kth.se>,
+     <https://www.kth.se/profile/matben/>, Support guru
+
+   • Bertrand Bordage: <bordage.bertrand@gmail.com>, Core developer,
+     font designer
+
+   • Trevor Daniels: <t.daniels@treda.co.uk>, Assistant documentation
+     editor
+
+   • Colin Hall: Bug Meister
+
+   • Ian Hulin: Core developer
+
+   • Reinhold Kainhofer: <reinhold@kainhofer.com>,
+     <https://reinhold.kainhofer.com>, Core developer, Music2xml
+     wrangler
+
+   • Pedro Kroeger: Build Meister
+
+   • Jonathan Kulp: Assistant documentation editor
+
+   • James Lowe: Documentation, Patch Meister
+
+   • Joe Neeman: Core developer
+
+   • Jan Nieuwenhuizen: <janneke@gnu.org>, <https://JoyofSource.com>,
+     <https://AvatarAcademy.nl>, Main author
+
+   • John Mandereau: <john.mandereau@free.fr>, Translation Meister
+
+   • Patrick McCarty: SVG guru, bug squad member, bug squasher, text
+     handling
+
+   • Graham Percival: <https://percival-music.ca>, Bug Meister, Grand
+     Documentation Project leader
+
+   • Mark Polesky: Documentation, Code cleanup
+
+   • Neil Puttock: Core developer
+
+   • Jürgen Reuter: <reuter_j@web.de>, <https://www.juergen-reuter.de>,
+     Ancient notation
+
+   • Mike Solomon: <mike@mikesolomon.org>, Core developer, Frog Meister
+
+   • Erik Sandberg: Bug Meister
+
+   • Nicolas Sceaux: Core developer, Schemer extraordinaire
+
+   • Carl Sorensen: <c_sorensen@byu.edu>, Core developer
+
+   • Valentin Villenave: Core developer
+
+   • Janek Warchoł: <janek.lilypond@gmail.com>, Core developer
+
+Current Contributors
+--------------------
+
+Programming
+...........
+
+Erlend E. Aasland, Kevin Barry, Martín Rincón Botero, Tim Burgess,
+Thibaut Cuvelier, Jefferson Felix, David Stephen Grant, Jordan
+Henderson, Masamichi Hosoda, Nihal Jere, Martin Joerg, Michael Käppler,
+Doug Kearns, Mark Knoop, Thomas Morley, Lukas-Fabian Moser, Martin
+Neubauer, Knut Petersen, Valentin Petzel, Pete Siddall, Alen Šiljak,
+Samuel Tam, Timofey, Nathan Whetsell
+
+Font
+....
+
+Johannes Feulner, David Stephen Grant, Owen Lamb
+
+Documentation
+.............
+
+Michael Käppler, Daniel Tobias Johansen Langhoff, Thomas Morley, John
+Wheeler
+
+Translation
+...........
+
+Federico Bruni, Walter Garcia-Fontes, Dénes Harmath, Masamichi Hosoda,
+Guyutongxue, Chengrui Li, Jean-Charles Malahieude, Benkő Pál
+
+Past Contributors
+-----------------
+
+Programming
+...........
+
+Erlend Aasland, Maximilian Albert, Aleksandr Andreev, Guido Amoruso, Don
+Armstrong, Guido Aulisi, Joe Austin, Sven Axelsson, Kevin Barry, Robin
+Bannister, Kristof Bastiaensen, Étienne Beaulé, Davide Bonetti, Frédéric
+Bron, Federico Bruni, Nathan Chou, Juliusz Chroboczek, Peter Chubb,
+Angelo Contardi, Vicente Solsona Della, Hajo Dezelski, Michael Welsh
+Duggan, Hassan Elfatihi, David Feuer, Bertalan Fodor, Richard Gay,
+Mathieu Giraud, Frederic Gohier, Lisa Opus Goldstein, Adam Good, John
+Gourlay, David Stephen Grant, Torsten Hämmerle, Yuval Harel, Andrew
+Hawryluk, Karlin High, Christian Hitz, Karin Hoethker, Rutger Hofmann,
+Marc Hohl, Masamichi Hosoda, Bernard Hurley, Yoshinobu Ishizaki, Chris
+Jackson, Felix Janda, David Jedlinsky, Heikki Junes, Michael Käppler,
+Thomas Klausner, Marek Klein, Mark Knoop, Michael Krause, Tobias
+Kretschmar, Jean-Baptiste Lamy, John Lemcke, Patrice Levesque, Vincent
+Le Ligeour, Jonatan Liljedahl, Urs Liska, Peter Lutek, Kieren MacMillan,
+Andrew Main, John Mandereau, Hendrik Maryns, Malte Meyn, Thomas Morgan,
+Thomas Morley, Paul Morris, Lukas-Fabian Moser, Alexander Myltsev, David
+Nalesnik, Matthias Neeracher, Martin Neubauer, Joram Noeck, Keith OHara,
+Justin Ohmie, Tatsuya Ono, Antonio Ospite, Benkő Pál, Benjamin Peterson,
+Knut Petersen, Matthew Peveler, Guy Gascoigne-Piggford, Anders
+Pilegaard, Henning Hraban Ramm, Nathan Reed, Julien Rioux, Johannes
+Rohrer, Ben Rudiak-Gould, Stan Sanderson, Andreas Scherer, Johannes
+Schindelin, Patrick Schmidt, Devon Schudy, Boris Shingarov, Kim Shrier,
+Edward Sanford Sutton, Adam Spiers, Tim Starling, David Svoboda, Simon
+Tatham, Heikki Taurainen, Piers Titus van der Torren, Owen Tuz,
+Sebastiano Vigna, Jan-Peter Voigt, Arno Waschk, Bernhard M. Wiedemann,
+John Williams, Andrew Wilson, Jaap de Wolff, Milan Zamazal, Rune
+Zedeler, Boris-Chengbiao Zhou, Rodolfo Zitellini
+
+Font
+....
+
+Jay Anderson, Tom Cato Amundsen, Torsten Hämmerle, Marc Hohl, Masamichi
+Hosoda, Chris Jackson, Alexander Kobel, Daniel Benjamin Miller, Abraham
+Lee, Keith OHara, Carsten Steger, Arno Waschk, Rune Zedeler
+
+Documentation
+.............
+
+Erlend Aasland, Simon Albrecht, Trevor Bača, Kevin Barry, Bernhard
+Bloechl, Alard de Boer, Frédéric Bron, Federico Bruni, Torsten Hämmerle,
+Jay Hamilton, Joseph Harfouch, Andrew Hawryluk, Karlin High, Cameron
+Horsburgh, Geoff Horton, Masamichi Hosoda, Heikki Junes, Michael
+Käppler, Kurtis Kroon, Davide Liessi, Urs Liska, Dave Luttinen, Kieren
+MacMillan, Jean-Charles Malahieude, Malte Meyn, Christian Mondrup, Mike
+Moral, Thomas Morley, Paul Morris, Eyolf Østrem, Ralph Palmer, Pierre
+Perol-Schneider, François Pinard, Noam Postavsky, David Pounder, Michael
+Rasmussen, Till Rettig, Pavel Roskin, Patrick Schmidt, Andrej Shadura,
+Alberto Simoes, Fr.  Samuel Springuel, Guy Stalnaker, Greg Swinford,
+Martin Tarenskeen, Arnold Theresius, Anh Hai Trinh, Eduardo Vieira,
+Stefan Weil, Rune Zedeler, Rodolfo Zitellini
+
+Bug squad
+.........
+
+Simon Albrecht, James E. Bailey, Federico Bruni, Eluze, Phil Holmes,
+Derek Klinge, Marek Klein, Urs Liska, Kieren MacMillan, Ralph Palmer,
+Dmytro O. Redchuk
+
+Support
+.......
+
+Simon Albrecht, Eluze, Anthony Fok, Christian Hitz, Marc Hohl, Phil
+Holmes, Chris Jackson, Heikki Junes, Marek Klein, Urs Liska, Alex
+Loomis, Kieren MacMillan, Tim McNamara, Thomas Morley, Paul Morris,
+David Nalesnik, Ralph Palmer, Pierre Perol-Schneider, Neil Puttock,
+David Svoboda, Tao
+
+Translation
+...........
+
+Caio Barros, Alard de Boer, Federico Bruni, Luca Rossetto Casel, Felipe
+Castro, Abel Cheung, Frédéric Chiasson, Simon Dahlbacka, Orm Finnendahl,
+Rafael Fontenelle, Pavel Fric, Hiroshi Fukuhara, Walter Garcia-Fontes,
+David González, Tommaso Gordini, Nicolas Grandclaude, Erika Griechisch,
+Dénes Harmath, Damien Heurtebise, Masamichi Hosoda, Bjoern Jacke,
+Matthieu Jacquot, Neil Jerram, Heikki Junes, Nicolas Klutchnikoff,
+Jean-Charles Malahieude, Adrian Mariano, Christian Mondrup, Tineke de
+Munnik, Steven Michael Murphy, Till Paala, François Pinard, Gauvain
+Pocentek, Till Rettig, Ludovic Sardain, Yoshiki Sawada, Thomas
+Scharkowski, Clytie Siddall, August S. Sigov, Roland Stigge, Tomohiro
+Tatejima, Paco Tomillo, Risto Vääräniemi, Andrea Valle, Ralf Wildenhues,
+Olcay Yıldırım
+

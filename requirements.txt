@@ -9,3 +9,5 @@ soundfile
 matplotlib
 librosa
 basic-pitch
+music21
+pdf2image
