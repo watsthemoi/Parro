@@ -8,7 +8,6 @@ import platform
 from music21 import converter, environment, lily
 import os
 import time
-import subprocess
 from PIL import Image, ImageTk, ImageChops
 
 class NewSheetController:
@@ -68,8 +67,8 @@ class NewSheetController:
             score = converter.parse(midi_path)
 
             # Set the path to the bundled LilyPond binary
-            # No executable needed in PATH for MacOS
             project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
+            name, ext = os.path.splitext(midi_path)
 
             # Set the environment and user settings explicitly
             us = environment.UserSettings()
@@ -77,10 +76,89 @@ class NewSheetController:
             us['musescoreDirectPNGPath'] = r"C:\Program Files\MuseScore 4\bin\MuseScore4.exe"
             us['musicxmlPath']
 
-            # Save the LilyPond file and specify PNG output
-            score_file_path = os.path.join(project_dir)
+            # Write the file and save it towards the filepath
+            score_file_path = os.path.join(project_dir, f"{name}")
             score.write('musicxml.png', fp=score_file_path)
+
+            if os.path.exists(f"{name}-1.png"):
+                return self.update_view_with_score(f"{name}-1.png")
+            else:
+                print("Failed to generate score image.")
 
         except Exception as e:
             raise e
         
+    def add_white_padding(self, image):
+        """Add white padding to the top of the image."""
+        width, height = image.size
+
+        # Create a new image with a white background
+        new_height = height + 20
+        padded_image = Image.new('RGB', (width, new_height), (255, 255, 255))  # White background
+
+        # Paste the original image on the new image, shifted down to create top padding
+        padded_image.paste(image, (0, 20))
+
+        return padded_image
+
+    def crop_image(self, image, padding=20):
+        bg = Image.new(image.mode, image.size, (255, 255, 255))  # White background for comparison
+        diff = ImageChops.difference(image, bg)
+        bbox = diff.getbbox()  # Find the bounding box of the non-white areas
+
+        if bbox:
+            # Add padding to the bounding box
+            left, upper, right, lower = bbox
+            left = max(left - padding, 0)
+            upper = max(upper - padding, 0)
+            right = min(right + padding, image.width)
+            lower = min(lower + padding, image.height)
+
+            # Crop the image with the padded bounding box
+            return image.crop((left, upper, right, lower))
+
+        return image  # Return original image if no white space detected
+    
+    def scale_image(self, image, max_width, max_height):
+        """Scale the image down to fit within max_width and max_height, maintaining aspect ratio."""
+        # Get the original dimensions of the image
+        width, height = image.size
+
+        # Calculate the aspect ratio
+        aspect_ratio = width / height
+
+        # Determine the new width and height while maintaining the aspect ratio
+        if width > max_width or height > max_height:
+            # Check if the image is wider or taller than the allowed dimensions
+            if aspect_ratio > 1:
+                # Wider than tall, scale by width
+                new_width = max_width
+                new_height = int(max_width / aspect_ratio)
+            else:
+                # Taller than wide, scale by height
+                new_height = max_height
+                new_width = int(max_height * aspect_ratio)
+        else:
+            # The image is smaller than the max dimensions, so return it as is
+            return image
+
+        # Resize the image while maintaining the aspect ratio
+        return image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+    def update_view_with_score(self, png_path):
+        """Display the rendered score (PDF or PNG) in the view."""
+        try:
+            image = Image.open(png_path)
+            if image:  
+                cropped_image = self.crop_image(image)
+                padded_image = self.add_white_padding(cropped_image)
+
+                # Scale the image down while maintaining the aspect ratio (e.g., max width and height of 400)
+                scaled_image = self.scale_image(padded_image, max_width=800, max_height=800)
+                img_tk = ImageTk.PhotoImage(scaled_image)
+
+                self.root.score_display.configure(image=img_tk, text='')  # Update the image in the view
+                self.root.score_display.image = img_tk  # Keep a reference to avoid garbage collection
+
+        except Exception as e:
+            print(f"Error displaying score: {e}")    
