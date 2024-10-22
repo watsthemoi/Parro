@@ -78,7 +78,7 @@ class NewSheetController:
             if platform.system() == "Darwin":  # macOS
                 us['musicxmlPath'] = os.path.join(project_dir, muse_path_mac)
                 us['musescoreDirectPNGPath'] = os.path.join(project_dir, muse_path_mac)
-                us['musicxmlPath']
+                us['musicxmlPath'] 
             
             else:  # Windows or other OS
                 us['musicxmlPath'] = os.path.join(project_dir, muse_path_win)
