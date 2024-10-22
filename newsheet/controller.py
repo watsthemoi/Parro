@@ -68,13 +68,22 @@ class NewSheetController:
 
             # Set the path to the bundled LilyPond binary
             project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
+            muse_path_win = r"bin\MuseScore 4\bin\MuseScore4.exe"
+            muse_path_mac = r"MuseScore 4.app\Contents\MacOS\MuseScore4"
             name, ext = os.path.splitext(midi_path)
 
             # Set the environment and user settings explicitly
+            # Path depends on OS
             us = environment.UserSettings()
-            us['musicxmlPath'] = r'C:\Program Files\MuseScore 4\bin\MuseScore4.exe'
-            us['musescoreDirectPNGPath'] = r"C:\Program Files\MuseScore 4\bin\MuseScore4.exe"
-            us['musicxmlPath']
+            if platform.system() == "Darwin":  # macOS
+                us['musicxmlPath'] = os.path.join(project_dir, muse_path_mac)
+                us['musescoreDirectPNGPath'] = os.path.join(project_dir, muse_path_mac)
+                us['musicxmlPath']
+            
+            else:  # Windows or other OS
+                us['musicxmlPath'] = os.path.join(project_dir, muse_path_win)
+                us['musescoreDirectPNGPath'] = os.path.join(project_dir, muse_path_win)
+                us['musicxmlPath']
 
             # Write the file and save it towards the filepath
             score_file_path = os.path.join(project_dir, f"{name}")
