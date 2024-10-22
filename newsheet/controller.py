@@ -160,5 +160,21 @@ class NewSheetController:
                 self.root.score_display.configure(image=img_tk, text='')  # Update the image in the view
                 self.root.score_display.image = img_tk  # Keep a reference to avoid garbage collection
 
+        ### Poppler omitted code:
+        #   # For simplicity, convert the PDF's first page to an image using Pillow
+            # You need to install 'pdf2image' package for this (pip install pdf2image)
+            #from pdf2image import convert_from_path
+
+            #project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
+            #if platform.system() == "Darwin": 
+            #    poppler_path = os.path.join(project_dir, 'bin', 'poppler', '24.04.0_1', 'bin')
+            #else:
+            #    poppler_path = os.path.join(project_dir, 'bin', 'poppler-24.08.0', 'Library', 'bin')
+
+            #images = convert_from_path(pdf_path, poppler_path=poppler_path)
+        
+         
+
         except Exception as e:
             print(f"Error displaying score: {e}")    
+
