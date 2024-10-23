@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE score-partwise  PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="4.0">
+  <identification>
+    <encoding>
+      <encoding-date>2024-10-22</encoding-date>
+      <software>music21 v.9.1.0</software>
+    </encoding>
+  </identification>
+  <defaults>
+    <scaling>
+      <millimeters>7</millimeters>
+      <tenths>40</tenths>
+    </scaling>
+  </defaults>
+  <part-list>
+    <score-part id="P4b45262a19d8433a7e03faa0a2fd08f2">
+      <part-name>Electric Piano</part-name>
+      <part-abbreviation>E.Pno</part-abbreviation>
+      <score-instrument id="Id298dc4cbccfb46577b4e1a8ca0f53dc">
+        <instrument-name>Electric Piano</instrument-name>
+        <instrument-abbreviation>E.Pno</instrument-abbreviation>
+      </score-instrument>
+      <midi-instrument id="Id298dc4cbccfb46577b4e1a8ca0f53dc">
+        <midi-channel>1</midi-channel>
+        <midi-program>5</midi-program>
+      </midi-instrument>
+    </score-part>
+  </part-list>
+  <!--=========================== Part 1 ===========================-->
+  <part id="P4b45262a19d8433a7e03faa0a2fd08f2">
+    <!--========================= Measure 1 ==========================-->
+    <measure implicit="no" number="1">
+      <attributes>
+        <divisions>10080</divisions>
+        <time>
+          <beats>4</beats>
+          <beat-type>4</beat-type>
+        </time>
+        <clef>
+          <sign>G</sign>
+          <line>2</line>
+        </clef>
+      </attributes>
+      <direction>
+        <direction-type>
+          <metronome parentheses="no">
+            <beat-unit>quarter</beat-unit>
+            <per-minute>120</per-minute>
+          </metronome>
+        </direction-type>
+        <sound tempo="120" />
+      </direction>
+      <note dynamics="92.22">
+        <pitch>
+          <step>C</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>16800</duration>
+        <type>half</type>
+        <time-modification>
+          <actual-notes>6</actual-notes>
+          <normal-notes>5</normal-notes>
+          <normal-type>16th</normal-type>
+        </time-modification>
+        <notations>
+          <tuplet bracket="no" number="1" placement="above" type="start">
+            <tuplet-actual>
+              <tuplet-number>6</tuplet-number>
+              <tuplet-type>16th</tuplet-type>
+            </tuplet-actual>
+            <tuplet-normal>
+              <tuplet-number>5</tuplet-number>
+              <tuplet-type>16th</tuplet-type>
+            </tuplet-normal>
+          </tuplet>
+          <tuplet number="1" type="stop" />
+        </notations>
+      </note>
+      <note dynamics="107.78">
+        <pitch>
+          <step>F</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note dynamics="91.11">
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>15120</duration>
+        <type>quarter</type>
+        <dot />
+      </note>
+      <note dynamics="105.56">
+        <pitch>
+          <step>C</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <tie type="start" />
+        <type>quarter</type>
+        <notations>
+          <tied type="start" />
+        </notations>
+      </note>
+      <note dynamics="105.56">
+        <pitch>
+          <step>C</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>2520</duration>
+        <tie type="stop" />
+        <tie type="start" />
+        <type>16th</type>
+        <notations>
+          <tied type="stop" />
+          <tied type="start" />
+        </notations>
+      </note>
+    </measure>
+    <!--========================= Measure 2 ==========================-->
+    <measure implicit="no" number="2">
+      <note dynamics="105.56">
+        <pitch>
+          <step>C</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>15120</duration>
+        <tie type="stop" />
+        <type>quarter</type>
+        <dot />
+        <notations>
+          <tied type="stop" />
+        </notations>
+      </note>
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <barline location="right">
+        <bar-style>light-heavy</bar-style>
+      </barline>
+    </measure>
+  </part>
+</score-partwise>
