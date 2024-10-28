@@ -5,10 +5,8 @@ from basic_pitch.inference import predict
 from basic_pitch import ICASSP_2022_MODEL_PATH
 import os
 import platform
-from music21 import converter, environment, lily
-import os
+from music21 import *
 import time
-import subprocess
 from PIL import Image, ImageTk, ImageChops
 
 class NewSheetController:
@@ -18,6 +16,24 @@ class NewSheetController:
         self.file = " "
         midi_file = "midifile.mid"
         self.root = root
+
+        # Set the path to the bundled MuseScore 4 executable/binary
+        self.project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
+        muse_path_win = r"bin\MuseScore 4\bin\MuseScore4.exe"
+        muse_path_mac = r"MuseScore 4.app\Contents\MacOS\MuseScore4"
+
+        # Set the environment and user settings explicitly
+        # Path depends on OS
+        us = environment.UserSettings()
+        if platform.system() == "Darwin":  # macOS
+            us['musicxmlPath'] = os.path.join(self.project_dir, muse_path_mac)
+            us['musescoreDirectPNGPath'] = os.path.join(self.project_dir, muse_path_mac)
+            us['musicxmlPath'] 
+            
+        else:  # Windows or other OS
+            us['musicxmlPath'] = os.path.join(self.project_dir, muse_path_win)
+            us['musescoreDirectPNGPath'] = os.path.join(self.project_dir, muse_path_win)
+            us['musicxmlPath']
 
     def add_audio_file(self):
         # Open file dialog to select an audio file
@@ -55,7 +71,7 @@ class NewSheetController:
             
             time.sleep(1)
             # Generate the score using music21
-            self.generate_music21_score("recording.mid")
+            self.generate_music21_score(f"{name}.mid")
 
             return note_events
         except Exception as e:
@@ -66,72 +82,20 @@ class NewSheetController:
         try:
             # Parse the MIDI file with music21
             score = converter.parse(midi_path)
+            name, ext = os.path.splitext(midi_path)
 
-            # Set the path to the bundled LilyPond binary
-            # No executable needed in PATH for MacOS
-            project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
-            if platform.system() == "Darwin":  # macOS
-                lilypond_path = os.path.join(project_dir, 'bin', 
-                                             'lilypond', '2.24.4', 'bin', 'lilypond')
-        
-            else:  # Windows or other OS
-                lilypond_path = os.path.join(project_dir, 'bin', 'lilypond', 
-                                             'lilypond-2.24.4', 'bin', 'lilypond.exe')
+            # Write the file and save it towards the filepath
+            score_file_path = os.path.join(self.project_dir, f"{name}")
+            score.write('musicxml.png', fp=score_file_path)
 
-            # Set the environment and user settings explicitly
-            environment.UserSettings()['lilypondPath'] = lilypond_path
-
-            # Save the LilyPond file and specify PNG output
-            score_file_path = os.path.join(project_dir, 'file.ly')
-            score.write('lily', fp=score_file_path)
-
-            # Now modify the .ly file before rendering it
-            self.clean_ly_file(score_file_path)
-
-            try:
-                output_pdf = score_file_path.replace('.ly', '.pdf')  # Generate PDF for simplicity
-                # Call LilyPond to generate the PDF
-                process = subprocess.Popen(
-                [lilypond_path, score_file_path],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
-            )
-            except Exception as e:
-                print("failed to generate the png from pdf")
-                raise e
-                
-            # Check if the PNG was generated and update the view
-            if os.path.exists(output_pdf):
-                self.update_view_with_score(output_pdf)
+            if os.path.exists(f"{name}-1.png"):
+                return self.update_view_with_score(f"{name}-1.png")
             else:
                 print("Failed to generate score image.")
 
         except Exception as e:
             raise e
         
-    def clean_ly_file(self, file_path):
-        """Clean the .ly file by removing unwanted sections."""
-        with open(file_path, 'r') as file:
-            lines = file.readlines()
-
-        cleaned_lines = []
-        skip_block = False
-
-        for line in lines:
-            if '}' in line:
-                skip_block = False
-            # Skip the entire \layout block and the RemoveEmptyStaffContext
-            if '\\layout {' in line or '\\RemoveEmptyStaffContext' in line or '\\override VerticalAxisGroup' in line:
-                skip_block = True
-                break
-
-            if not skip_block:
-                cleaned_lines.append(line)
-
-        # Write the cleaned content back to the file
-        with open(file_path, 'w') as file:
-            file.writelines(cleaned_lines)
-
     def add_white_padding(self, image):
         """Add white padding to the top of the image."""
         width, height = image.size
@@ -189,22 +153,11 @@ class NewSheetController:
         # Resize the image while maintaining the aspect ratio
         return image.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
-    def update_view_with_score(self, pdf_path):
+    def update_view_with_score(self, png_path):
         """Display the rendered score (PDF or PNG) in the view."""
         try:
-            # For simplicity, convert the PDF's first page to an image using Pillow
-            # You need to install 'pdf2image' package for this (pip install pdf2image)
-            from pdf2image import convert_from_path
-
-            project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
-            if platform.system() == "Darwin": 
-                poppler_path = os.path.join(project_dir, 'bin', 'poppler', '24.04.0_1', 'bin')
-            else:
-                poppler_path = os.path.join(project_dir, 'bin', 'poppler-24.08.0', 'Library', 'bin')
-
-            images = convert_from_path(pdf_path, poppler_path=poppler_path)
-            if images:
-                image = images[0]   
+            image = Image.open(png_path)
+            if image:  
                 cropped_image = self.crop_image(image)
                 padded_image = self.add_white_padding(cropped_image)
 
@@ -215,5 +168,17 @@ class NewSheetController:
                 self.root.score_display.configure(image=img_tk, text='')  # Update the image in the view
                 self.root.score_display.image = img_tk  # Keep a reference to avoid garbage collection
 
+        ### Poppler omitted code:
+        #   # For simplicity, convert the PDF's first page to an image using Pillow
+            # You need to install 'pdf2image' package for this (pip install pdf2image)
+            #from pdf2image import convert_from_path
+
+            #project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
+            #if platform.system() == "Darwin": 
+            #    poppler_path = os.path.join(project_dir, 'bin', 'poppler', '24.04.0_1', 'bin')
+            #else:
+            #    poppler_path = os.path.join(project_dir, 'bin', 'poppler-24.08.0', 'Library', 'bin')
+
+            #images = convert_from_path(pdf_path, poppler_path=poppler_path)
         except Exception as e:
             print(f"Error displaying score: {e}")
