@@ -236,19 +236,25 @@ class NewSheetController:
 
     def add_in(self, note_in, dur, index):
         """Adds in user selected notes of a specific duration in a specific position in the notes array."""
-        n = note.Note(f'{note_in}')
-        # note_dur = duration.Duration(f'{dur}')
+        try:
+            n = note.Note(f'{note_in}')
+            n.quarterLength = float(dur)
+            idx = int(index) - 1 # Index starts at 1
 
-        # Retrieve measure to edit
-        ed_measure = self.models.re_edit_measure()
+            # Retrieve measure to edit
+            ed_measure = self.models.re_edit_measure()
 
-        old_array = list(ed_measure.notes)
-        old_array.insert(int(index), n)
+            if idx < len(ed_measure):
+                ed_measure.insert(idx, n)
+            else:
+                ed_measure.append(n)    
 
-        # Clear measure of notes, then add new note array
-        ed_measure.clear()
-        for i in old_array:
-            ed_measure.append(i)
+            ed_measure.show('text')
 
-        print(old_array)
+            self.models.store_edit_measure(ed_measure)
+        except Exception as e:
+            print(f"Error: {e}")    
+
+    def post_add_measure(self):
+        """Returns the render of the ed_measure into the GUI and the .musicxml file into a folder."""        
            
