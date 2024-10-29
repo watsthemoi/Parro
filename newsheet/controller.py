@@ -78,11 +78,14 @@ class NewSheetController:
             raise e                
 
     def generate_music21_score(self, midi_path):
-        """Convert MIDI to music21 score and render as LilyPond"""
+        """Convert MIDI to music21 score and render through MuseScore"""
         try:
             # Parse the MIDI file with music21
             score = converter.parse(midi_path)
             name, ext = os.path.splitext(midi_path)
+
+            # Store the xml score
+            self.models.store_score_parse(score)
 
             # Write the file and save it towards the filepath
             score_file_path = os.path.join(self.project_dir, f"{name}")
