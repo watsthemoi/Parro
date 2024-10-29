@@ -196,4 +196,35 @@ class NewSheetController:
 
         measure = score.parts[0].measure(find_measure)
 
-        print(measure.show('text'))
+        # Extract clef info
+        clefs = measure.flatten().getElementsByClass('Clef')
+        if clefs:
+            clef = clefs[0]
+            print(f'Clef: {clef.sign}')
+
+        # Extract time signature info
+        time_sigs = measure.flatten().getElementsByClass('TimeSignature')
+        if time_sigs:
+            time_sig = time_sigs[0]
+            print(f'Time signature: {time_sig.ratioString}')
+      
+
+        # Extract key signature info
+        key_sigs = measure.flatten().getElementsByClass('KeySignature')
+        if not key_sigs:
+            key_sig = key.Key('C')
+        else:
+            key_sig = key_sigs[0]
+            print(f'Key signature: {key_sig.sharps} or {key_sig.flats}')    
+
+        # Extract notes signature info
+        notes = measure.flatten().getElementsByClass('Note')
+        narray = []
+
+        if notes:
+            for n in notes:
+                narray.append(n.nameWithOctave)
+                print(f'Note: {n.nameWithOctave}')
+
+
+        return clef.sign, time_sig.ratioString, key_sig, narray

@@ -51,6 +51,18 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.BAR_CONFIRM = CTkButton(master=self.MFRM, text="Confirm", command=self.highlight)
         self.BAR_CONFIRM.pack_forget()
 
+        # Measure information display frame
+        self.display_info = CTkFrame(master=self.MFRM)
+        self.display_info.pack_forget()
+        self.clef_lb = CTkLabel(master=self.display_info, text="Clef: ")
+        self.clef_lb.pack(pady=5)
+        self.ts_lb = CTkLabel(master=self.display_info, text="Time Signature: ")
+        self.ts_lb.pack(pady=5)
+        self.ks_lb = CTkLabel(master=self.display_info, text="Key: ")
+        self.ks_lb.pack(pady=5)
+        self.notes_lb = CTkLabel(master=self.display_info, text="Notes: ")
+        self.notes_lb.pack(pady=5) 
+
     def add_audio_file(self):
         """Add File Function to Controller"""
         self.controller.add_audio_file()
@@ -63,4 +75,23 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
 
     def highlight(self):
         """Calls controller function to find and highlight measure, and return bar information."""
-        self.controller.highlight(self.highlight_bar.get().strip().upper()) 
+        self.highlight_bar.pack_forget()
+        self.BAR_CONFIRM.pack_forget()
+
+        c, ts, ks, n = self.controller.highlight(self.highlight_bar.get().strip().upper()) 
+
+        # Configure labels with information
+        if c:
+            self.clef_lb.configure(text=f"Clef: {c}")
+            self.clef_lb.pack(pady=5)
+        if ts:
+            self.ts_lb.configure(text=f"Time Signature: {ts}")
+            self.ts_lb.pack(pady=5)
+        if ks:
+            self.ks_lb.configure(text=f"Key Signature: {ks}")
+            self.ks_lb.pack(pady=5)  
+        if n:    
+            self.notes_lb.configure(text=f"Notes: {n}")
+            self.notes_lb.pack(pady=5)
+
+        self.display_info.pack(pady=5)
