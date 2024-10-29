@@ -4,7 +4,7 @@ class NewSheetModel:
         self.audio_outfile = None
         self.note_events = []
 
-        self.xml = None
+        self.score = None
 
     def store_infile(self, file):
         """Store the selected file's path in the model."""
@@ -32,4 +32,4 @@ class NewSheetModel:
 
     def re_score_parse(self):
         """Returns the xml file of the parsed midi"""
-        return self.score()    
+        return self.score    

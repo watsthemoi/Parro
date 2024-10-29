@@ -185,3 +185,15 @@ class NewSheetController:
             #images = convert_from_path(pdf_path, poppler_path=poppler_path)
         except Exception as e:
             print(f"Error displaying score: {e}")
+
+    def highlight(self, entry):
+        """Controller highlight function. Takes entry from view and finds measure in score."""
+        # Use user input as the measure of choice
+        find_measure = entry
+
+        # Given a score, find the measure in said score
+        score = self.models.re_score_parse()
+
+        measure = score.parts[0].measure(find_measure)
+
+        print(measure.show('text'))

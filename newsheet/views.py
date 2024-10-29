@@ -63,4 +63,4 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
 
     def highlight(self):
         """Calls controller function to find and highlight measure, and return bar information."""
-        
+        self.controller.highlight(self.highlight_bar.get().strip().upper()) 
