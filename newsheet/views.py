@@ -68,6 +68,10 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.crud_frm.pack_forget()
         self.CRUD_ADD = CTkButton(master=self.crud_frm, text="Add")
         self.CRUD_ADD.pack(pady=5)
+        self.CRUD_DEL = CTkButton(master=self.crud_frm, text="Delete")
+        self.CRUD_DEL.pack(pady=5)
+        self.CRUD_RPL = CTkButton(master=self.crud_frm, text="Replace")
+        self.CRUD_RPL.pack(pady=5)
 
     def add_audio_file(self):
         """Add File Function to Controller"""
