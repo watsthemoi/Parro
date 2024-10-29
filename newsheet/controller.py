@@ -196,6 +196,9 @@ class NewSheetController:
 
         measure = score.parts[0].measure(find_measure)
 
+        # Store measure for edits
+        self.models.store_edit_measure(measure)
+
         # Extract clef info
         clefs = measure.flatten().getElementsByClass('Clef')
         if clefs:
@@ -226,5 +229,26 @@ class NewSheetController:
                 narray.append(n.nameWithOctave)
                 print(f'Note: {n.nameWithOctave}')
 
+        # Store narray for retrieval
+
         # Return the information to be configured
         return clef.sign, time_sig.ratioString, key_sig, narray
+
+    def add_in(self, note_in, dur, index):
+        """Adds in user selected notes of a specific duration in a specific position in the notes array."""
+        n = note.Note(f'{note_in}')
+        # note_dur = duration.Duration(f'{dur}')
+
+        # Retrieve measure to edit
+        ed_measure = self.models.re_edit_measure()
+
+        old_array = list(ed_measure.notes)
+        old_array.insert(int(index), n)
+
+        # Clear measure of notes, then add new note array
+        ed_measure.clear()
+        for i in old_array:
+            ed_measure.append(i)
+
+        print(old_array)
+           

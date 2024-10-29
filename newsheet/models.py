@@ -5,6 +5,8 @@ class NewSheetModel:
         self.note_events = []
 
         self.score = None
+        self.narray = []
+        self.measure = None
 
     def store_infile(self, file):
         """Store the selected file's path in the model."""
@@ -33,3 +35,19 @@ class NewSheetModel:
     def re_score_parse(self):
         """Returns the xml file of the parsed midi"""
         return self.score    
+    
+    def store_narray(self, narray):
+        """Stores the array of notes"""
+        self.narray = narray
+
+    def re_narray(self):
+        """Returns the array of notes"""
+        return self.narray    
+    
+    def store_edit_measure(self, measure):
+        """Stores the measure currently being highlighted"""
+        self.measure = measure
+
+    def re_edit_measure(self):
+        """Returns the highlighted measure to be edited"""
+        return self.measure    

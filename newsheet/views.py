@@ -66,8 +66,30 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         # CRUD buttons frame that appears and disappears alongside display or when CRUD buttons are pressed
         self.crud_frm = CTkFrame(master=self.MFRM)
         self.crud_frm.pack_forget()
-        self.CRUD_ADD = CTkButton(master=self.crud_frm, text="Add")
+
+        # Add button and entries
+        self.CRUD_ADD = CTkButton(master=self.crud_frm, text="Add", command=self.add_mode)
         self.CRUD_ADD.pack(pady=5)
+
+        self.add_frm = CTkFrame(master=self.MFRM)
+        self.add_frm.pack_forget()
+        self.add_n_lb = CTkLabel(master=self.add_frm, text="Add note: ")
+        self.add_n_lb.pack(pady=5)
+        self.note_ent = CTkEntry(master=self.add_frm)
+        self.note_ent.pack(side="top")
+        self.add_dur_lb = CTkLabel(master=self.add_frm, text="Duration: ")
+        self.add_dur_lb.pack(pady=5)
+        self.dur_ent = CTkEntry(master=self.add_frm)
+        self.dur_ent.pack(side="top")
+        self.add_idx_lb = CTkLabel(master=self.add_frm, text="Index in Notes: ")
+        self.add_idx_lb.pack(pady=5)
+        self.idx_ent = CTkEntry(master=self.add_frm)
+        self.idx_ent.pack(side="top")
+        self.ADD_INS = CTkButton(master=self.add_frm, text="Insert", command=self.add_in)
+        self.ADD_INS.pack(pady=5)
+        self.ADD_FIN = CTkButton(master=self.add_frm, text="Finish")
+        self.ADD_FIN.pack(pady=5)
+
         self.CRUD_DEL = CTkButton(master=self.crud_frm, text="Delete")
         self.CRUD_DEL.pack(pady=5)
         self.CRUD_RPL = CTkButton(master=self.crud_frm, text="Replace")
@@ -108,3 +130,16 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
 
         self.display_info.pack(pady=5)
         self.crud_frm.pack(pady=5, side=RIGHT)
+
+    def add_mode(self):
+        """Initiated add notes mode"""   
+        self.crud_frm.pack_forget()
+        self.add_frm.pack(pady=5, side=RIGHT) 
+
+    def add_in(self):
+        """Function call to controller. Gets user input for note, duration, and index in array."""
+        note_in = self.note_ent.get().strip().upper()
+        dur = self.dur_ent.get().strip().upper()
+        idx = self.idx_ent.get().strip().upper()
+
+        self.controller.add_in(note_in, dur, idx)
