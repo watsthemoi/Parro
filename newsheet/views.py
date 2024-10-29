@@ -52,7 +52,7 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.BAR_CONFIRM.pack_forget()
 
         # Measure information display frame
-        self.display_info = CTkFrame(master=self.MFRM)
+        self.display_info = CTkScrollableFrame(master=self.MFRM, label_text="Measure Info")
         self.display_info.pack_forget()
         self.clef_lb = CTkLabel(master=self.display_info, text="Clef: ")
         self.clef_lb.pack(pady=5)
@@ -63,6 +63,12 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.notes_lb = CTkLabel(master=self.display_info, text="Notes: ")
         self.notes_lb.pack(pady=5) 
 
+        # CRUD buttons frame that appears and disappears alongside display or when CRUD buttons are pressed
+        self.crud_frm = CTkFrame(master=self.MFRM)
+        self.crud_frm.pack_forget()
+        self.CRUD_ADD = CTkButton(master=self.crud_frm, text="Add")
+        self.CRUD_ADD.pack(pady=5)
+
     def add_audio_file(self):
         """Add File Function to Controller"""
         self.controller.add_audio_file()
@@ -72,6 +78,8 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
            After choice, it highlights the measure (shows elements of it as labels)."""
         self.highlight_bar.pack(pady=5)
         self.BAR_CONFIRM.pack(pady=5)
+        self.display_info.pack_forget()
+        self.crud_frm.pack_forget()
 
     def highlight(self):
         """Calls controller function to find and highlight measure, and return bar information."""
@@ -95,3 +103,4 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
             self.notes_lb.pack(pady=5)
 
         self.display_info.pack(pady=5)
+        self.crud_frm.pack(pady=5, side=RIGHT)

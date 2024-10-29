@@ -226,5 +226,5 @@ class NewSheetController:
                 narray.append(n.nameWithOctave)
                 print(f'Note: {n.nameWithOctave}')
 
-
+        # Return the information to be configured
         return clef.sign, time_sig.ratioString, key_sig, narray
