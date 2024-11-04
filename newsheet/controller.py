@@ -19,8 +19,8 @@ class NewSheetController:
 
         # Set the path to the bundled MuseScore 4 executable/binary
         self.project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
-        muse_path_win = r"bin\MuseScore 4\bin\MuseScore4.exe"
-        muse_path_mac = r"MuseScore 4.app\Contents\MacOS\MuseScore4"
+        muse_path_win = r"bin\MuseScore 3\bin\MuseScore3.exe"
+        muse_path_mac = r"MuseScore 3.app\Contents\MacOS\MuseScore3"
 
         # Set the environment and user settings explicitly
         # Path depends on OS
@@ -33,7 +33,7 @@ class NewSheetController:
         else:  # Windows or other OS
             us['musicxmlPath'] = os.path.join(self.project_dir, muse_path_win)
             us['musescoreDirectPNGPath'] = os.path.join(self.project_dir, muse_path_win)
-            us['musicxmlPath']
+            
 
     def add_audio_file(self):
         # Open file dialog to select an audio file
@@ -255,6 +255,19 @@ class NewSheetController:
         except Exception as e:
             print(f"Error: {e}")    
 
-    def post_add_measure(self):
-        """Returns the render of the ed_measure into the GUI and the .musicxml file into a folder."""        
+    def post_add(self):
+        """Returns the render of the ed_measure into the GUI and the .musicxml file into a folder.
+           Used in tandem with Finish button in views. Requires measure to be re-merged with score."""   
+
+        # THIS CODE DOESN'T RE-MERGE MEASURE WITH SCORE. IMPROVE IT.   
+        to_render = self.models.re_edit_measure()    
+        name, ext = os.path.splitext(to_render) 
            
+        # Write the file and save it towards the filepath
+        score_file_path = os.path.join(self.project_dir, f"{name}")
+        to_render.write('musicxml.png', fp=score_file_path)
+
+        if os.path.exists(f"{name}-2.png"):
+            return self.update_view_with_score(f"{name}-2.png")
+        else:
+            print("Failed to generate score image.")
