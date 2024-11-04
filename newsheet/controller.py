@@ -20,14 +20,14 @@ class NewSheetController:
         # Set the path to the bundled MuseScore 4 executable/binary
         self.project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
         muse_path_win = r"bin\MuseScore 3\bin\MuseScore3.exe"
-        muse_path_mac = r"MuseScore 3.app\Contents\MacOS\MuseScore3"
+        muse_path_mac = os.path.join(self.project_dir, "bin", "musescore", "MuseScore 4.app", "Contents", "MacOS", "mscore")
 
         # Set the environment and user settings explicitly
         # Path depends on OS
         us = environment.UserSettings()
         if platform.system() == "Darwin":  # macOS
-            us['musicxmlPath'] = os.path.join(self.project_dir, muse_path_mac)
-            us['musescoreDirectPNGPath'] = os.path.join(self.project_dir, muse_path_mac)
+            us['musicxmlPath'] = muse_path_mac
+            us['musescoreDirectPNGPath'] = muse_path_mac
             us['musicxmlPath'] 
             
         else:  # Windows or other OS
