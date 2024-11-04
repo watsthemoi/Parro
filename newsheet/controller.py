@@ -19,7 +19,7 @@ class NewSheetController:
 
         # Set the path to the bundled MuseScore 4 executable/binary
         self.project_dir = os.path.dirname(os.path.abspath("TranscriptApp/"))
-        muse_path_win = r"bin\MuseScore 3\bin\MuseScore3.exe"
+        muse_path_win = r"bin\MuseScore 4\bin\MuseScore4.exe"
         muse_path_mac = os.path.join(self.project_dir, "bin", "musescore", "MuseScore 4.app", "Contents", "MacOS", "mscore")
 
         # Set the environment and user settings explicitly
@@ -236,6 +236,7 @@ class NewSheetController:
 
     def add_in(self, note_in, dur, index):
         """Adds in user selected notes of a specific duration in a specific position in the notes array."""
+        # NOT A GREAT METHOD. MUST BE IMPROVED
         try:
             n = note.Note(f'{note_in}')
             n.quarterLength = float(dur)
