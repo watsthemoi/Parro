@@ -23,7 +23,8 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.controller = NewSheetController(self)
         self.note_events = []   
 
-        self.MFRM = CTkFrame(master=self, width=225, fg_color=("#212121", "#212121"), bg_color=("#212121", "#212121"))
+        self.MFRM = CTkFrame(master=self, width=225, fg_color=("#212121", "#212121"), 
+                             bg_color=("#212121", "#212121"))
         self.MFRM.pack()
 
         self.BTN_ADD = CTkButton(master=self.MFRM, text="Add Audio", text_color=("#ffffff", "#ffffff"), 
@@ -38,52 +39,101 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.score_display = CTkLabel(self.MFRM, text="Score will appear here")
         self.score_display.pack(padx=(10, 0), pady=(20, 0))
 
+        self.BTN_EDIT = CTkButton(master=self.MFRM, text="Edit", text_color=("#ffffff", "#ffffff"), 
+                                  width=180, fg_color=("#212121", "gray13"), bg_color=("#212121", "gray13"), 
+                                  hover_color=("#ff8080", "#ff5e5e"), font=CTkFont(size=15, family="Courier New"),
+                                  command=self.edit_mode)
+        self.BTN_EDIT.pack(padx=(10, 0), pady=(15, 0))   
+
+        # Entry bar and confirmation button. Hidden until edit is pressed.
+        self.highlight_bar = CTkEntry(master=self.MFRM)
+        self.highlight_bar.pack_forget()
+        self.BAR_CONFIRM = CTkButton(master=self.MFRM, text="Confirm", command=self.highlight)
+        self.BAR_CONFIRM.pack_forget()
+
+        # Measure information display frame
+        self.display_info = CTkScrollableFrame(master=self.MFRM, label_text="Measure Info")
+        self.display_info.pack_forget()
+        self.clef_lb = CTkLabel(master=self.display_info, text="Clef: ")
+        self.clef_lb.pack(pady=5)
+        self.ts_lb = CTkLabel(master=self.display_info, text="Time Signature: ")
+        self.ts_lb.pack(pady=5)
+        self.ks_lb = CTkLabel(master=self.display_info, text="Key: ")
+        self.ks_lb.pack(pady=5)
+        self.notes_lb = CTkLabel(master=self.display_info, text="Notes: ")
+        self.notes_lb.pack(pady=5) 
+
+        # CRUD buttons frame that appears and disappears alongside display or when CRUD buttons are pressed
+        self.crud_frm = CTkFrame(master=self.MFRM)
+        self.crud_frm.pack_forget()
+
+        # Add button and entries
+        self.CRUD_ADD = CTkButton(master=self.crud_frm, text="Add", command=self.add_mode)
+        self.CRUD_ADD.pack(pady=5)
+
+        self.add_frm = CTkFrame(master=self.MFRM)
+        self.add_frm.pack_forget()
+        self.add_n_lb = CTkLabel(master=self.add_frm, text="Add note: ")
+        self.add_n_lb.pack(pady=5)
+        self.note_ent = CTkEntry(master=self.add_frm)
+        self.note_ent.pack(side="left")
+        self.add_dur_lb = CTkLabel(master=self.add_frm, text="Duration: ")
+        self.add_dur_lb.pack(pady=5)
+        self.dur_ent = CTkEntry(master=self.add_frm)
+        self.dur_ent.pack(side="left")
+        self.add_idx_lb = CTkLabel(master=self.add_frm, text="Index in Notes: ")
+        self.add_idx_lb.pack(pady=5)
+        self.idx_ent = CTkEntry(master=self.add_frm)
+        self.idx_ent.pack(side="left")
+        self.ADD_INS = CTkButton(master=self.add_frm, text="Insert")
+        self.ADD_INS.pack(pady=5)
+        self.ADD_FIN = CTkButton(master=self.add_frm, text="Finish")
+        self.ADD_FIN.pack(pady=5)
+
+        self.CRUD_DEL = CTkButton(master=self.crud_frm, text="Delete")
+        self.CRUD_DEL.pack(pady=5)
+        self.CRUD_RPL = CTkButton(master=self.crud_frm, text="Replace")
+        self.CRUD_RPL.pack(pady=5)
+
     def add_audio_file(self):
-        """Add File Function"""
+        """Add File Function to Controller"""
         self.controller.add_audio_file()
-        #if note_events is not None:
-            #self.update_note_events_display(note_events)
+        
+    def edit_mode(self):
+        """Prompts user for measure that they want to edit. 
+           After choice, it highlights the measure (shows elements of it as labels)."""
+        self.highlight_bar.pack(pady=5)
+        self.BAR_CONFIRM.pack(pady=5)
+        self.display_info.pack_forget()
+        self.crud_frm.pack_forget()
 
-    #def update_note_events_display(self, note_events):
-        #"""Update the display with note events"""
-        #self.score_display.delete("1.0", "end")  # Clear previous content
-        #for index, item in enumerate(note_events):
-            #self.score_display.insert("end", f"{index + 1}: {item}\n")  # Show note events in textbox              
+    def highlight(self):
+        """Calls controller function to find and highlight measure, and return bar information."""
+        self.highlight_bar.pack_forget()
+        self.BAR_CONFIRM.pack_forget()
 
-#    def midi_to_note_octave(self, midi_pitch):
-#        # List of note names in an octave (C, C#, D, D#, E, F, F#, G, G#, A, A#, B)
-#        note_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-#
-#        # Determine the note and the octave
-#        note = note_names[midi_pitch % 12]  # Use modulo 12 to get the note within an octave
-#        octave = (midi_pitch // 12) - 1     # MIDI pitch 60 is C4 (middle C), hence subtracting 1
-#
-#        return note, octave
-#
-#    # Function to sort note_events by start time and end time
-#    def sort_note_events(self, note_events):
-#        # Sort by start_time (event[0]), and if necessary by end_time (event[1])
-#        return sorted(note_events, key=lambda event: (event[0], event[1]))
-#
-#    # Example usage after running predict()
-#
-#    # Provide the path to your input audio file (.wav)
-#    audio_file_path = (r"C:\Users\newcr\Documents\baspit\Audio\FLKeysTest3.wav")  # Replace with your actual file path
-#
-#    # Run the prediction function to get model_output, midi_data, and note_events
-#    model_output, midi_data, note_events = predict(audio_file_path)
-#
-#    print(note_events)
+        c, ts, ks, n = self.controller.highlight(self.highlight_bar.get().strip().upper()) 
 
-#    # Sort the note events
-#    sorted_note_events = sort_note_events(note_events)
-#
-#    # Now you can print the sorted events
-#    for event in sorted_note_events:
-#        start_time, end_time, midi_pitch, velocity, _ = event
-#        print(f"Start: {start_time:.3f}, End: {end_time:.3f}, Pitch: {midi_pitch}, Velocity: {velocity}")
-#
-#    for event in sorted_note_events:
-#        midi_pitch = event[2]  # Extract the midi_pitch from each event
-#        note, octave = midi_to_note_octave(midi_pitch)
-#        print(f"MIDI Pitch: {midi_pitch} -> Note: {note}{octave}")
+        # Configure labels with information
+        if c:
+            self.clef_lb.configure(text=f"Clef: {c}")
+            self.clef_lb.pack(pady=5)
+        if ts:
+            self.ts_lb.configure(text=f"Time Signature: {ts}")
+            self.ts_lb.pack(pady=5)
+        if ks:
+            self.ks_lb.configure(text=f"Key Signature: {ks}")
+            self.ks_lb.pack(pady=5)  
+        if n:    
+            self.notes_lb.configure(text=f"Notes: {n}")
+            self.notes_lb.pack(pady=5)
+
+        self.display_info.pack(pady=5)
+        self.crud_frm.pack(pady=5, side=RIGHT)
+
+    def add_mode(self):
+        """Initiated add notes mode"""   
+        self.crud_frm.pack_forget()
+        self.add_frm.pack(pady=5, side=RIGHT) 
+
+      
