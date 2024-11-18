@@ -85,9 +85,9 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.add_idx_lb.pack(pady=5)
         self.idx_ent = CTkEntry(master=self.add_frm)
         self.idx_ent.pack(side="left")
-        self.ADD_INS = CTkButton(master=self.add_frm, text="Insert", command=self.add_in)
+        self.ADD_INS = CTkButton(master=self.add_frm, text="Insert")
         self.ADD_INS.pack(pady=5)
-        self.ADD_FIN = CTkButton(master=self.add_frm, text="Finish", command=self.post_add)
+        self.ADD_FIN = CTkButton(master=self.add_frm, text="Finish")
         self.ADD_FIN.pack(pady=5)
 
         self.CRUD_DEL = CTkButton(master=self.crud_frm, text="Delete")
@@ -136,14 +136,4 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.crud_frm.pack_forget()
         self.add_frm.pack(pady=5, side=RIGHT) 
 
-    def add_in(self):
-        """Function call to controller. Gets user input for note, duration, and index in array."""
-        note_in = self.note_ent.get().strip().upper()
-        dur = self.dur_ent.get().strip().upper()
-        idx = self.idx_ent.get().strip().upper()
-
-        self.controller.add_in(note_in, dur, idx)
-
-    def post_add(self):
-        """Calls controller function to return updated MusicXML and render through MuseScore"""
-        self.controller.post_add()    
+      
