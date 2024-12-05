@@ -90,8 +90,16 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
         self.ADD_FIN = CTkButton(master=self.add_frm, text="Finish")
         self.ADD_FIN.pack(pady=5)
 
+        # Delete button and entries
         self.CRUD_DEL = CTkButton(master=self.crud_frm, text="Delete")
         self.CRUD_DEL.pack(pady=5)
+
+        # Buttons to immediately remove ties and rests
+        self.CRUD_R_TIES = CTkButton(master=self.crud_frm, text="Remove Ties", command=self.rem_ties)
+        self.CRUD_R_TIES.pack(pady=5)
+        self.CRUD_R_RESTS = CTkButton(master=self.crud_frm, text="Remove Rests", command=self.rem_rests)
+        self.CRUD_R_RESTS.pack(pady=5) 
+
         self.CRUD_RPL = CTkButton(master=self.crud_frm, text="Replace")
         self.CRUD_RPL.pack(pady=5)
 
@@ -134,6 +142,11 @@ class NewSheetView(CTkFrame):  # Inheriting from CTkFrame instead of CTk
     def add_mode(self):
         """Initiated add notes mode"""   
         self.crud_frm.pack_forget()
-        self.add_frm.pack(pady=5, side=RIGHT) 
+        self.add_frm.pack(pady=5, side=RIGHT)   
 
-      
+    def rem_ties(self):
+        """Calls Controller to remove all ties from the composition"""
+
+
+    def rem_rests(self):
+        """Calls Controller to remove all rests from the composition"""      
