@@ -8,10 +8,10 @@
 
 ### *Exploring a Software Solution to Music Theory Analysis and Visualization*
 ---
-Parro aims to help musicians understand and engage with music notation by converting their played music into written form. The app supports various instruments, including string, woodwind, brass, and vocals. Users can record their performances, view the notated result, and replay the music to assess accuracy.
-
-Parro addresses the frustrations musicians often have with traditional music theory learning methods. It offers a real-time, visual representation of music, making the process smoother and more engaging. The app's primary audience includes musicians of all skill levels, particularly those who find traditional theory learning tedious. 
+Parro is built using the [music21 toolkit for musical analysis and computational musicology] (https://github.com/cuthbertLab/music21). The intent of Parro is to assist music theory learning with a hands-on approach, where user's can upload any audio track and receive a rendered composition that can be saved and edited.
+Parro utlizes [Spotify's basic-pitch library] (https://github.com/spotify/basic-pitch/tree/main) to extract MIDI data from audio files.  
 
 ### *Setting Up*
 ---
-Setup and activate a Python 3.11 environment in Git. Run main.py to initialize the application.
+Download MuseScore 4 and add the application folder to the /bin folder. This is required to render .musicxml files.
+Setup and activate a Python 3.11 environment in Git. Run main.py to initialize the Parro.
